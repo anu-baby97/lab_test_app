@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_test_booking_app/Screens/LabInfo.dart';
 import 'package:lab_test_booking_app/Screens/LoginScreen.dart';
 import 'package:lab_test_booking_app/Screens/RegistrationScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
+        LabInfo.id: (context) => LabInfo(),
       },
     );
   }

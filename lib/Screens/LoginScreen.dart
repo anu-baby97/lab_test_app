@@ -194,8 +194,21 @@ class _LoginScreenState extends State<LoginScreen>
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
                                 InkWell(
-                                  onTap: () {
-//    Navigator.pushNamedAndRemoveUntil();
+                                  onTap: () async {
+                                    try {
+                                      final user = await _auth
+                                          .signInWithEmailAndPassword(
+                                              email: email, password: password);
+
+                                      if (user != null) {
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            LabInfo.id,
+                                            (route) => true);
+                                      }
+                                    } catch (e) {
+                                      print(e);
+                                    }
                                   },
                                   child: Text(
                                     "Forgot Password?",
