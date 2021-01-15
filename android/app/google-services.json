@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "677950125700",
+    "project_id": "lab-test-booking-app-6514b",
+    "storage_bucket": "lab-test-booking-app-6514b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677950125700:android:2b132775b7266148c074d1",
+        "android_client_info": {
+          "package_name": "anubaby.lab_test_booking_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "677950125700-ttiekfqs96cjja0i3676cdesef81k1qk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnKS4tZdBjdZ5K6s49CzeMyQRWcFme0NM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677950125700-ttiekfqs96cjja0i3676cdesef81k1qk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
