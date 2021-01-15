@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_test_booking_app/Screens/LoginScreen.dart';
+import 'package:lab_test_booking_app/Screens/RegistrationScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
       initialRoute: LoginScreen.id,
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
       },
     );
   }
