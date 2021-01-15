@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lab_test_booking_app/Screens/LabInfo.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'LoginScreen';
@@ -9,6 +11,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
+  final _auth = FirebaseAuth.instance;
+  String email;
+  String password;
+
   AnimationController controller;
   AnimationController controller1;
   @override
@@ -153,9 +159,11 @@ class _LoginScreenState extends State<LoginScreen>
                                     fontSize:
                                         ScreenUtil.getInstance().setSp(45))),
                             TextFormField(
-                              //autofocus: true,
+                              autofocus: true,
                               keyboardType: TextInputType.emailAddress,
-                              onChanged: (value) {},
+                              onChanged: (value) {
+                                email = value;
+                              },
                               decoration: InputDecoration(
                                   hintText: "Enter Email",
                                   hintStyle: TextStyle(
@@ -170,7 +178,9 @@ class _LoginScreenState extends State<LoginScreen>
                                     fontSize:
                                         ScreenUtil.getInstance().setSp(45))),
                             TextFormField(
-                              onChanged: (value) {},
+                              onChanged: (value) {
+                                password = value;
+                              },
                               obscureText: true,
                               decoration: InputDecoration(
                                   hintText: "Enter Password",
@@ -243,7 +253,20 @@ class _LoginScreenState extends State<LoginScreen>
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () async {
+                                  try {
+                                    final user =
+                                        await _auth.signInWithEmailAndPassword(
+                                            email: email, password: password);
+
+                                    if (user != null) {
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context, LabInfo.id, (route) => true);
+                                    }
+                                  } catch (e) {
+                                    print(e);
+                                  }
+                                },
                                 child: Center(
                                   child: Text(
                                     "SIGN IN",
