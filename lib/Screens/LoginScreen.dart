@@ -33,6 +33,14 @@ class _LoginScreenState extends State<LoginScreen> {
             : Container(),
       );
 
+  Widget horizontalLine() => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Container(
+          width: ScreenUtil.getInstance().setWidth(120),
+          height: 1.0,
+          color: Colors.black26.withOpacity(.2),
+        ),
+      );
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
@@ -223,6 +231,36 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: ScreenUtil.getInstance().setHeight(40),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        horizontalLine(),
+                      ],
+                    ),
+                    SizedBox(
+                      height: ScreenUtil.getInstance().setHeight(25),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "New User? ",
+                          style: TextStyle(fontFamily: "Poppins-Medium"),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            //Navigator.pushNamedAndRemoveUntil();
+                          },
+                          child: Text("Sign Up",
+                              style: TextStyle(
+                                  color: Color(0xFF5d74e3),
+                                  fontFamily: "Poppins-Bold")),
                         )
                       ],
                     ),
