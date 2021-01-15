@@ -7,7 +7,35 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen>
+    with TickerProviderStateMixin {
+  AnimationController controller;
+  AnimationController controller1;
+  @override
+  initState() {
+    super.initState();
+    controller = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+      upperBound: 35,
+    );
+    AnimationController(duration: Duration(seconds: 2), vsync: this);
+    controller.forward();
+    controller.addListener(() {
+      setState(() {});
+    });
+    controller1 = AnimationController(
+      duration: Duration(seconds: 1),
+      vsync: this,
+      upperBound: 22,
+    );
+    AnimationController(duration: Duration(seconds: 1), vsync: this);
+    controller1.forward();
+    controller1.addListener(() {
+      setState(() {});
+    });
+  }
+
   bool _isSelected = false;
 
   void _radio() {
@@ -46,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
     ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
     return new Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0XFFB9D9E8),
       resizeToAvoidBottomPadding: true,
       body: SafeArea(
         child: Stack(
@@ -57,12 +85,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   color: Color(0XFFF1F7F8),
                   padding: EdgeInsets.only(left: 20),
+                  height: controller.value,
                   child: Row(
                     children: <Widget>[
                       Image.asset(
                         "assets/logo.png",
-                        width: 30,
-                        height: 30,
+                        width: controller.value,
+                        height: controller.value,
                       ),
                       SizedBox(
                         width: 10,
@@ -70,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text("MEDICOS LAB BOOKING ",
                           style: TextStyle(
                               color: Colors.cyan,
-                              fontSize: 18,
+                              fontSize: controller1.value,
                               fontFamily: "Poppins-Bold",
                               letterSpacing: .6,
                               fontWeight: FontWeight.bold))
@@ -85,94 +114,91 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 60.0),
+                padding: EdgeInsets.only(left: 28.0, right: 28.0),
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: 290),
-                    Padding(
-                      padding: EdgeInsets.only(left: 28.0, right: 28.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10.0),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black12,
-                                  offset: Offset(0.0, 15.0),
-                                  blurRadius: 15.0),
-                              BoxShadow(
-                                  color: Colors.black12,
-                                  offset: Offset(0.0, -10.0),
-                                  blurRadius: 10.0),
-                            ]),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left: 16.0, right: 16.0, top: 16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Login",
-                                  style: TextStyle(
-                                      fontSize:
-                                          ScreenUtil.getInstance().setSp(65),
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: ScreenUtil.getInstance().setHeight(30),
-                              ),
-                              Text("Email",
-                                  style: TextStyle(
-                                      fontFamily: "Poppins-Medium",
-                                      fontSize:
-                                          ScreenUtil.getInstance().setSp(45))),
-                              TextFormField(
-                                //autofocus: true,
-                                keyboardType: TextInputType.emailAddress,
-                                onChanged: (value) {},
-                                decoration: InputDecoration(
-                                    hintText: "Enter Email",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey, fontSize: 15.0)),
-                              ),
-                              SizedBox(
-                                height: ScreenUtil.getInstance().setHeight(30),
-                              ),
-                              Text("Password",
-                                  style: TextStyle(
-                                      fontFamily: "Poppins-Medium",
-                                      fontSize:
-                                          ScreenUtil.getInstance().setSp(45))),
-                              TextFormField(
-                                onChanged: (value) {},
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                    hintText: "Enter Password",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey, fontSize: 15.0)),
-                              ),
-                              SizedBox(
-                                height: ScreenUtil.getInstance().setHeight(35),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  InkWell(
-                                    onTap: () {
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black12,
+                                offset: Offset(0.0, 15.0),
+                                blurRadius: 15.0),
+                            BoxShadow(
+                                color: Colors.black12,
+                                offset: Offset(0.0, -10.0),
+                                blurRadius: 10.0),
+                          ]),
+                      child: Padding(
+                        padding:
+                            EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Login",
+                                style: TextStyle(
+                                    fontSize:
+                                        ScreenUtil.getInstance().setSp(65),
+                                    fontFamily: "Poppins-Bold",
+                                    letterSpacing: .6)),
+                            SizedBox(
+                              height: ScreenUtil.getInstance().setHeight(30),
+                            ),
+                            Text("Email",
+                                style: TextStyle(
+                                    fontFamily: "Poppins-Medium",
+                                    fontSize:
+                                        ScreenUtil.getInstance().setSp(45))),
+                            TextFormField(
+                              //autofocus: true,
+                              keyboardType: TextInputType.emailAddress,
+                              onChanged: (value) {},
+                              decoration: InputDecoration(
+                                  hintText: "Enter Email",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 15.0)),
+                            ),
+                            SizedBox(
+                              height: ScreenUtil.getInstance().setHeight(30),
+                            ),
+                            Text("Password",
+                                style: TextStyle(
+                                    fontFamily: "Poppins-Medium",
+                                    fontSize:
+                                        ScreenUtil.getInstance().setSp(45))),
+                            TextFormField(
+                              onChanged: (value) {},
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  hintText: "Enter Password",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 15.0)),
+                            ),
+                            SizedBox(
+                              height: ScreenUtil.getInstance().setHeight(35),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                InkWell(
+                                  onTap: () {
 //    Navigator.pushNamedAndRemoveUntil();
-                                    },
-                                    child: Text(
-                                      "Forgot Password?",
-                                      style: TextStyle(
-                                          color: Colors.blue,
-                                          fontFamily: "Poppins-Medium",
-                                          fontSize: ScreenUtil.getInstance()
-                                              .setSp(40)),
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
+                                  },
+                                  child: Text(
+                                    "Forgot Password?",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontFamily: "Poppins-Medium",
+                                        fontSize:
+                                            ScreenUtil.getInstance().setSp(40)),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
                         ),
                       ),
                     ),
