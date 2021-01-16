@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LabInfo extends StatefulWidget {
   static const String id = "LabInfoScreen";
@@ -7,7 +8,7 @@ class LabInfo extends StatefulWidget {
 }
 
 class _LabInfoState extends State<LabInfo> {
-  /*final _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
   User loggedInUser;
   void getCurrentUser() async {
     try {
@@ -31,7 +32,7 @@ class _LabInfoState extends State<LabInfo> {
   void dispose() {
     super.dispose();
   }
-*/
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
