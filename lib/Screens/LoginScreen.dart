@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:lab_test_booking_app/Screens/RegistrationScreen.dart';
+import 'package:lab_test_booking_app/Screens/Forgot Password.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'LoginScreen';
@@ -199,7 +200,8 @@ class _LoginScreenState extends State<LoginScreen>
                                 children: <Widget>[
                                   InkWell(
                                     onTap: () async {
-                                      // Navigator.pushNamedAndRemoveUntil();
+                                      Navigator.pushNamedAndRemoveUntil(context,
+                                          ForgotPassword.id, (route) => true);
                                     },
                                     child: Text(
                                       "Forgot Password?",
