@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lab_test_booking_app/Screens/Forgot%20Password.dart';
+import 'package:lab_test_booking_app/Screens/Lab1.dart';
 import 'package:lab_test_booking_app/Screens/LabInfo.dart';
 import 'package:lab_test_booking_app/Screens/LoginScreen.dart';
 import 'package:lab_test_booking_app/Screens/RegistrationScreen.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         RegistrationScreen.id: (context) => RegistrationScreen(),
         LabInfo.id: (context) => LabInfo(),
         ForgotPassword.id: (context) => ForgotPassword(),
+        Lab1.id: (context) => Lab1(),
       },
     );
   }
