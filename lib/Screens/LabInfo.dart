@@ -55,14 +55,12 @@ class _LabInfoState extends State<LabInfo> {
                         Navigator.pop(context);
                       },
                     ),
-                    SizedBox(
-                      height: 4,
-                    ),
                     TextField(
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.name,
                         textAlign: TextAlign.center,
                         onChanged: (value) {},
                         decoration: buildLocationInputDecoration()),
+                    Image.asset("assets/image_01.png"),
                     SizedBox(
                       height: 8.0,
                     ),
@@ -95,7 +93,6 @@ class _LabInfoState extends State<LabInfo> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
@@ -117,9 +114,6 @@ class _LabInfoState extends State<LabInfo> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
@@ -166,7 +160,6 @@ class _LabInfoState extends State<LabInfo> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
@@ -183,9 +176,6 @@ class _LabInfoState extends State<LabInfo> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
@@ -232,7 +222,6 @@ class _LabInfoState extends State<LabInfo> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
@@ -249,9 +238,6 @@ class _LabInfoState extends State<LabInfo> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
@@ -310,7 +296,6 @@ class _LabInfoState extends State<LabInfo> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
@@ -327,9 +312,6 @@ class _LabInfoState extends State<LabInfo> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
@@ -360,7 +342,6 @@ class _LabInfoState extends State<LabInfo> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
@@ -377,9 +358,6 @@ class _LabInfoState extends State<LabInfo> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
@@ -410,7 +388,6 @@ class _LabInfoState extends State<LabInfo> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
@@ -427,9 +404,6 @@ class _LabInfoState extends State<LabInfo> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
@@ -460,7 +434,6 @@ class _LabInfoState extends State<LabInfo> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
@@ -477,9 +450,6 @@ class _LabInfoState extends State<LabInfo> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
@@ -510,7 +480,6 @@ class _LabInfoState extends State<LabInfo> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
@@ -527,9 +496,6 @@ class _LabInfoState extends State<LabInfo> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
@@ -560,7 +526,6 @@ class _LabInfoState extends State<LabInfo> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
@@ -578,9 +543,6 @@ class _LabInfoState extends State<LabInfo> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
                   ],
                 ),
               ),
@@ -595,9 +557,13 @@ class _LabInfoState extends State<LabInfo> {
     return InputDecoration(
       prefixIcon: Padding(
         padding: const EdgeInsets.only(left: 30),
-        child: Icon(Icons.search),
+        child: Icon(
+          Icons.search,
+          color: Colors.cyan,
+        ),
       ),
       hintText: 'Enter the location',
+      hintStyle: TextStyle(fontFamily: "Poppins-Medium", color: Colors.cyan),
       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -619,12 +585,12 @@ class _LabInfoState extends State<LabInfo> {
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0.0, 15.0),
+              color: Colors.cyan.shade200,
+              offset: Offset(0.0, 0.0),
               blurRadius: 15.0),
           BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0.0, -10.0),
+              color: Colors.cyan.shade200,
+              offset: Offset(0.0, 0.0),
               blurRadius: 10.0),
         ]);
   }

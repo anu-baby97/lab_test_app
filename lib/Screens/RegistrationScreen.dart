@@ -5,6 +5,7 @@ import 'package:lab_test_booking_app/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_format/date_format.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = "RegistrationScreen";
@@ -40,6 +41,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             setState(() {
               print(value);
               genderSelect = value;
+              if (genderSelect.isEmpty) {
+                return "Select gender";
+              }
             });
           },
         ),
@@ -70,7 +74,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   DateTime selectedDate = DateTime.now();
-
   TextEditingController _date = new TextEditingController();
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -78,14 +81,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(1901),
-      lastDate: DateTime(2100),
+      lastDate: DateTime(2022),
       errorFormatText: 'Enter valid date',
       errorInvalidText: 'Enter date in valid range',
     );
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
-
         _date.value = TextEditingValue(text: picked.toString());
       });
   }
