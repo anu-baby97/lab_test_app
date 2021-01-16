@@ -46,6 +46,9 @@ class _LoginScreenState extends State<LoginScreen>
     });
   }
 
+  TextEditingController _controller = TextEditingController();
+  TextEditingController _controller1 = TextEditingController();
+
   bool _isSelected = false;
 
   void _radio() {
@@ -165,6 +168,7 @@ class _LoginScreenState extends State<LoginScreen>
                                       fontSize:
                                           ScreenUtil.getInstance().setSp(45))),
                               TextFormField(
+                                controller: _controller,
                                 keyboardType: TextInputType.emailAddress,
                                 onChanged: (value) {
                                   email = value;
@@ -183,6 +187,7 @@ class _LoginScreenState extends State<LoginScreen>
                                       fontSize:
                                           ScreenUtil.getInstance().setSp(45))),
                               TextFormField(
+                                controller: _controller1,
                                 onChanged: (value) {
                                   password = value;
                                 },
@@ -263,6 +268,9 @@ class _LoginScreenState extends State<LoginScreen>
                                 child: InkWell(
                                   onTap: () async {
                                     try {
+                                      setState(() {
+                                        showSpinner = true;
+                                      });
                                       final user = await _auth
                                           .signInWithEmailAndPassword(
                                               email: email, password: password);
@@ -272,7 +280,12 @@ class _LoginScreenState extends State<LoginScreen>
                                             context,
                                             LabInfo.id,
                                             (route) => true);
+                                        _controller.clear();
+                                        _controller1.clear();
                                       }
+                                      setState(() {
+                                        showSpinner = false;
+                                      });
                                     } catch (e) {
                                       print(e);
                                     }
