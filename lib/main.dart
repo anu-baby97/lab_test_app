@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lab_test_booking_app/Screens/Example.dart';
 import 'package:lab_test_booking_app/Screens/Forgot%20Password.dart';
 import 'package:lab_test_booking_app/Screens/Lab1.dart';
 import 'package:lab_test_booking_app/Screens/LabInfo.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Patient Portal",
       debugShowCheckedModeBanner: false,
-      initialRoute: LoginScreen.id,
+      initialRoute: Lab1.id,
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),

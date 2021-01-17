@@ -36,40 +36,45 @@ class _LabInfoState extends State<LabInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      backgroundColor: Color(0XFFB9D9E8),
-      body: SafeArea(
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    IconButton(
-                      icon: new Icon(Icons.arrow_back),
-                      onPressed: () {
-                        _auth.signOut();
-                        Navigator.pop(context);
-                      },
-                    ),
-                    TextField(
-                        keyboardType: TextInputType.name,
-                        textAlign: TextAlign.center,
-                        onChanged: (value) {},
-                        decoration: buildLocationInputDecoration()),
-                    Image.asset("assets/image_01.png"),
-                    SizedBox(
-                      height: 8.0,
-                    ),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 15),
+        child: SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                floating: true,
+                backgroundColor: Colors.white,
+                expandedHeight: 65,
+                snap: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: TextField(
+                      keyboardType: TextInputType.name,
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {},
+                      decoration: buildLocationInputDecoration()),
+                ),
+              ),
+              SliverAppBar(
+                floating: true,
+                backgroundColor: Colors.white,
+                expandedHeight: 130,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Image.asset(
+                    "assets/image_01.png",
+                  ),
+                ),
+              ),
+              SliverFixedExtentList(
+                itemExtent: 150,
+                delegate: SliverChildListDelegate(
+                  [
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: Container(
                         decoration: buildBoxDecoration(),
                         child: Padding(
-                          padding: EdgeInsets.all(14),
+                          padding: const EdgeInsets.all(14.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -146,18 +151,6 @@ class _LabInfoState extends State<LabInfo> {
                                       ),
                                     ],
                                   ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.check_box),
-                                      Text(
-                                        "Blood Test",
-                                        style: TextStyle(
-                                          fontFamily: "Poppins-Medium",
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                                 ],
                               ),
                               Row(
@@ -201,18 +194,6 @@ class _LabInfoState extends State<LabInfo> {
                                       Icon(Icons.check_box),
                                       Text(
                                         "ECG",
-                                        style: TextStyle(
-                                          fontFamily: "Poppins-Medium",
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.check_box),
-                                      Text(
-                                        "Pathology Test",
                                         style: TextStyle(
                                           fontFamily: "Poppins-Medium",
                                           fontSize: 15,
@@ -270,11 +251,49 @@ class _LabInfoState extends State<LabInfo> {
                                       ),
                                     ],
                                   ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Text(
+                                    "Profile >>>",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontFamily: "Poppins-Medium",
+                                        fontSize: 15),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Container(
+                        decoration: buildBoxDecoration(),
+                        child: Padding(
+                          padding: EdgeInsets.all(14),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text("Evergreen Diagonistics",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      fontFamily: "Poppins-Bold",
+                                      letterSpacing: .6)),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Column(
+                                children: [
                                   Row(
                                     children: [
                                       Icon(Icons.check_box),
                                       Text(
-                                        "Blood Test",
+                                        "ECG",
                                         style: TextStyle(
                                           fontFamily: "Poppins-Medium",
                                           fontSize: 15,
@@ -282,247 +301,55 @@ class _LabInfoState extends State<LabInfo> {
                                       ),
                                     ],
                                   ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Text(
+                                    "Profile >>>",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontFamily: "Poppins-Medium",
+                                        fontSize: 15),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Container(
+                        decoration: buildBoxDecoration(),
+                        child: Padding(
+                          padding: EdgeInsets.all(14),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text("Evergreen Diagonistics",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      fontFamily: "Poppins-Bold",
+                                      letterSpacing: .6)),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Column(
+                                children: [
                                   Row(
                                     children: [
                                       Icon(Icons.check_box),
                                       Text(
-                                        "Glucose Test",
+                                        "ECG",
                                         style: TextStyle(
                                           fontFamily: "Poppins-Medium",
                                           fontSize: 15,
                                         ),
                                       ),
                                     ],
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Profile >>>",
-                                    style: TextStyle(
-                                        color: Colors.blue,
-                                        fontFamily: "Poppins-Medium",
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Container(
-                        decoration: buildBoxDecoration(),
-                        child: Padding(
-                          padding: EdgeInsets.all(14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Westhill Clinical Laboratory",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.check_box),
-                                  Text(
-                                    "Blood Test",
-                                    style: TextStyle(
-                                      fontFamily: "Poppins-Medium",
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Profile >>>",
-                                    style: TextStyle(
-                                        color: Colors.blue,
-                                        fontFamily: "Poppins-Medium",
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Container(
-                        decoration: buildBoxDecoration(),
-                        child: Padding(
-                          padding: EdgeInsets.all(14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Sudharma Clinical Laboratory",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.check_box),
-                                  Text(
-                                    "Blood Test",
-                                    style: TextStyle(
-                                      fontFamily: "Poppins-Medium",
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Profile >>>",
-                                    style: TextStyle(
-                                        color: Colors.blue,
-                                        fontFamily: "Poppins-Medium",
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Container(
-                        decoration: buildBoxDecoration(),
-                        child: Padding(
-                          padding: EdgeInsets.all(14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Sairam Clinical Laboratory",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.check_box),
-                                  Text(
-                                    "Blood Test",
-                                    style: TextStyle(
-                                      fontFamily: "Poppins-Medium",
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Profile >>>",
-                                    style: TextStyle(
-                                        color: Colors.blue,
-                                        fontFamily: "Poppins-Medium",
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Container(
-                        decoration: buildBoxDecoration(),
-                        child: Padding(
-                          padding: EdgeInsets.all(14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Pulse - Doctors Lab Scans",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.check_box),
-                                  Text(
-                                    "Covid-19 Test",
-                                    style: TextStyle(
-                                      fontFamily: "Poppins-Medium",
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Profile >>>",
-                                    style: TextStyle(
-                                        color: Colors.blue,
-                                        fontFamily: "Poppins-Medium",
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Container(
-                        decoration: buildBoxDecoration(),
-                        child: Padding(
-                          padding: EdgeInsets.all(14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Neethi Laboratory",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.check_box),
-                                  Text(
-                                    "ECG",
-                                    style: TextStyle(
-                                      fontFamily: "Poppins-Medium",
-                                      fontSize: 15,
-                                    ),
                                   ),
                                 ],
                               ),
@@ -546,8 +373,8 @@ class _LabInfoState extends State<LabInfo> {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -569,11 +396,11 @@ class _LabInfoState extends State<LabInfo> {
         borderRadius: BorderRadius.all(Radius.circular(32.0)),
       ),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.white, width: 1.0),
+        borderSide: BorderSide(color: Colors.cyan, width: 1.0),
         borderRadius: BorderRadius.all(Radius.circular(32.0)),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.white, width: 2.0),
+        borderSide: BorderSide(color: Colors.cyan, width: 2.0),
         borderRadius: BorderRadius.all(Radius.circular(32.0)),
       ),
     );
@@ -585,11 +412,11 @@ class _LabInfoState extends State<LabInfo> {
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-              color: Colors.cyan.shade200,
+              color: Colors.cyan.shade100,
               offset: Offset(0.0, 0.0),
               blurRadius: 15.0),
           BoxShadow(
-              color: Colors.cyan.shade200,
+              color: Colors.cyan.shade100,
               offset: Offset(0.0, 0.0),
               blurRadius: 10.0),
         ]);
