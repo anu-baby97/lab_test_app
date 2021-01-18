@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lab_test_booking_app/Screens/BookingScreen.dart';
 import 'package:lab_test_booking_app/Screens/Lab1.dart';
 
 class LabInfo extends StatefulWidget {
@@ -55,18 +56,7 @@ class _LabInfoState extends State<LabInfo> {
                       decoration: buildLocationInputDecoration()),
                 ),
               ),
-              SliverAppBar(
-                floating: true,
-                backgroundColor: Colors.white,
-                expandedHeight: 130,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Image.asset(
-                    "assets/image_01.png",
-                  ),
-                ),
-              ),
-              SliverFixedExtentList(
-                itemExtent: 150,
+              SliverList(
                 delegate: SliverChildListDelegate(
                   [
                     Padding(
@@ -74,48 +64,101 @@ class _LabInfoState extends State<LabInfo> {
                       child: Container(
                         decoration: buildBoxDecoration(),
                         child: Padding(
-                          padding: const EdgeInsets.all(14.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Saroj Diagonistic Laboratory",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.check_box),
-                                  Text(
-                                    "Covid-19 Test",
+                          padding: const EdgeInsets.all(10.0),
+                          child: FlatButton(
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pushNamed(context, Lab1.id);
+                              });
+                            },
+                            highlightColor: Colors.cyan,
+                            focusColor: Colors.cyan.shade200,
+                            textColor: Colors.black,
+                            splashColor: Colors.cyan.shade200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Saroj Diagonistic Laboratory",
                                     style: TextStyle(
-                                      fontFamily: "Poppins-Medium",
-                                      fontSize: 15,
+                                        fontSize: 19,
+                                        color: Colors.black,
+                                        fontFamily: "Poppins-Bold",
+                                        letterSpacing: .6)),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                ListTile(
+                                    title: Text(
+                                        "Olive Arcade, Junction, Malaparamba, Kozhikode, Kerala 673009"),
+                                    leading: Icon(Icons.location_city)),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Text(
+                                        "250/-",
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontFamily: "Poppins-Medium",
+                                            fontSize: 15),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  InkWell(
-                                    child: Text(
-                                      "Profile >>>",
-                                      style: TextStyle(
-                                          color: Colors.blue,
-                                          fontFamily: "Poppins-Medium",
-                                          fontSize: 15),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Container(
+                        decoration: buildBoxDecoration(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: FlatButton(
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pushNamed(context, Lab1.id);
+                              });
+                            },
+                            highlightColor: Colors.cyan,
+                            focusColor: Colors.cyan.shade200,
+                            textColor: Colors.black,
+                            splashColor: Colors.cyan.shade200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Evergreen Diagonistics",
+                                    style: TextStyle(
+                                        fontSize: 19,
+                                        color: Colors.black,
+                                        fontFamily: "Poppins-Bold",
+                                        letterSpacing: .6)),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                ListTile(
+                                    title: Text(
+                                        "Address: SH29, Malaparamba, Kozhikode, Kerala 673017"),
+                                    leading: Icon(Icons.location_city)),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Text(
+                                        "200/-",
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontFamily: "Poppins-Medium",
+                                            fontSize: 15),
+                                      ),
                                     ),
-                                    onTap: () {
-                                      Navigator.pushNamed(context, Lab1.id);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -125,47 +168,49 @@ class _LabInfoState extends State<LabInfo> {
                       child: Container(
                         decoration: buildBoxDecoration(),
                         child: Padding(
-                          padding: EdgeInsets.all(14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("GMC Laboratory",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.check_box),
-                                      Text(
-                                        "ECG",
-                                        style: TextStyle(
-                                          fontFamily: "Poppins-Medium",
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Profile >>>",
+                          padding: const EdgeInsets.all(10.0),
+                          child: FlatButton(
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pushNamed(context, Lab1.id);
+                              });
+                            },
+                            highlightColor: Colors.cyan,
+                            focusColor: Colors.cyan.shade200,
+                            textColor: Colors.black,
+                            splashColor: Colors.cyan.shade200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("GMC Laboratory",
                                     style: TextStyle(
-                                        color: Colors.blue,
-                                        fontFamily: "Poppins-Medium",
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                        fontSize: 19,
+                                        color: Colors.black,
+                                        fontFamily: "Poppins-Bold",
+                                        letterSpacing: .6)),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                ListTile(
+                                    title:
+                                        Text("Address: Kakkodi, Kerala 673611"),
+                                    leading: Icon(Icons.location_city)),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Text(
+                                        "240/-",
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontFamily: "Poppins-Medium",
+                                            fontSize: 15),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -175,47 +220,49 @@ class _LabInfoState extends State<LabInfo> {
                       child: Container(
                         decoration: buildBoxDecoration(),
                         child: Padding(
-                          padding: EdgeInsets.all(14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Neethi Labs and Scans",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.check_box),
-                                      Text(
-                                        "ECG",
-                                        style: TextStyle(
-                                          fontFamily: "Poppins-Medium",
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Profile >>>",
+                          padding: const EdgeInsets.all(10.0),
+                          child: FlatButton(
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pushNamed(context, Lab1.id);
+                              });
+                            },
+                            highlightColor: Colors.cyan,
+                            focusColor: Colors.cyan.shade200,
+                            textColor: Colors.black,
+                            splashColor: Colors.cyan.shade200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Malva Laboratories",
                                     style: TextStyle(
-                                        color: Colors.blue,
-                                        fontFamily: "Poppins-Medium",
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                        fontSize: 19,
+                                        color: Colors.black,
+                                        fontFamily: "Poppins-Bold",
+                                        letterSpacing: .6)),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                ListTile(
+                                    title: Text(
+                                        "Address: East Hill, Kozhikode, Kerala 673005"),
+                                    leading: Icon(Icons.location_city)),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Text(
+                                        "220/-",
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontFamily: "Poppins-Medium",
+                                            fontSize: 15),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -225,47 +272,49 @@ class _LabInfoState extends State<LabInfo> {
                       child: Container(
                         decoration: buildBoxDecoration(),
                         child: Padding(
-                          padding: EdgeInsets.all(14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Evergreen Diagonistics",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.check_box),
-                                      Text(
-                                        "ECG",
-                                        style: TextStyle(
-                                          fontFamily: "Poppins-Medium",
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Profile >>>",
+                          padding: const EdgeInsets.all(10.0),
+                          child: FlatButton(
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pushNamed(context, Lab1.id);
+                              });
+                            },
+                            highlightColor: Colors.cyan,
+                            focusColor: Colors.cyan.shade200,
+                            textColor: Colors.black,
+                            splashColor: Colors.cyan.shade200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Neethi Labs and Scans",
                                     style: TextStyle(
-                                        color: Colors.blue,
-                                        fontFamily: "Poppins-Medium",
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                        fontSize: 19,
+                                        color: Colors.black,
+                                        fontFamily: "Poppins-Bold",
+                                        letterSpacing: .6)),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                ListTile(
+                                    title: Text(
+                                        "Address: P.O, Chelannur, Kerala 673317"),
+                                    leading: Icon(Icons.location_city)),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Text(
+                                        "250/-",
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontFamily: "Poppins-Medium",
+                                            fontSize: 15),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -275,97 +324,49 @@ class _LabInfoState extends State<LabInfo> {
                       child: Container(
                         decoration: buildBoxDecoration(),
                         child: Padding(
-                          padding: EdgeInsets.all(14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Evergreen Diagonistics",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.check_box),
-                                      Text(
-                                        "ECG",
-                                        style: TextStyle(
-                                          fontFamily: "Poppins-Medium",
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Profile >>>",
+                          padding: const EdgeInsets.all(10.0),
+                          child: FlatButton(
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pushNamed(context, Lab1.id);
+                              });
+                            },
+                            highlightColor: Colors.cyan,
+                            focusColor: Colors.cyan.shade200,
+                            textColor: Colors.black,
+                            splashColor: Colors.cyan.shade200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Plasma Diagnostic Services",
                                     style: TextStyle(
-                                        color: Colors.blue,
-                                        fontFamily: "Poppins-Medium",
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Container(
-                        decoration: buildBoxDecoration(),
-                        child: Padding(
-                          padding: EdgeInsets.all(14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Evergreen Diagonistics",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontFamily: "Poppins-Bold",
-                                      letterSpacing: .6)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.check_box),
-                                      Text(
-                                        "ECG",
+                                        fontSize: 19,
+                                        color: Colors.black,
+                                        fontFamily: "Poppins-Bold",
+                                        letterSpacing: .6)),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                ListTile(
+                                    title: Text(
+                                        "Address: Wayanad Rd, near Thayat Temple, Eranhipaalam, Bilathikkulam, Kozhikode, Kerala 673006"),
+                                    leading: Icon(Icons.location_city)),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Text(
+                                        "200/-",
                                         style: TextStyle(
-                                          fontFamily: "Poppins-Medium",
-                                          fontSize: 15,
-                                        ),
+                                            color: Colors.blue,
+                                            fontFamily: "Poppins-Medium",
+                                            fontSize: 15),
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Profile >>>",
-                                    style: TextStyle(
-                                        color: Colors.blue,
-                                        fontFamily: "Poppins-Medium",
-                                        fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -389,8 +390,9 @@ class _LabInfoState extends State<LabInfo> {
           color: Colors.cyan,
         ),
       ),
-      hintText: 'Enter the location',
-      hintStyle: TextStyle(fontFamily: "Poppins-Medium", color: Colors.cyan),
+      hintText: 'Search for the Laboratory',
+      hintStyle: TextStyle(
+          fontFamily: "Lobster-Regular", color: Colors.cyan, fontSize: 23),
       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(32.0)),

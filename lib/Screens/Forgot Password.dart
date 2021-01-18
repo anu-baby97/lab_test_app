@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lab_test_booking_app/Screens/LabInfo.dart';
 //import 'package:patient_portal/Screens/LoginScreen.dart';
+import 'package:lab_test_booking_app/Screens/TestInfo.dart';
 
 class ForgotPassword extends StatefulWidget {
   static const String id = "Forgot_Password_Screen";
@@ -81,7 +82,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, LabInfo.id);
+                            Navigator.pushNamed(context, TestInfo.id);
                           },
                           child: Center(
                             child: Text(
