@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lab_test_booking_app/Screens/LabInfo.dart';
-//import 'package:patient_portal/Screens/LoginScreen.dart';
+
 import 'package:lab_test_booking_app/Screens/TestInfo.dart';
 
 class ForgotPassword extends StatefulWidget {
