@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lab_test_booking_app/Screens/BookingScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lab_test_booking_app/Screens/Lab1.dart';
 
 class LabInfo extends StatefulWidget {
   static const String id = "LabInfo";
@@ -10,13 +9,23 @@ class LabInfo extends StatefulWidget {
   _LabInfoState createState() => _LabInfoState();
 }
 
-List labNames = ["Saroj", "Evegreen", "GMC"];
+List labNames = [
+  "Saroj Diagonistic Laboratory",
+  "Evegreen Diagonistics",
+  "GMC Laboratory",
+  "Malva Laboratories",
+  "Neethi Labs and Scans",
+  "Plasma Diagonistic Services"
+];
 
 class _LabInfoState extends State<LabInfo> {
   String labSelect;
   bool _isChecked = false;
   bool _isChecked1 = false;
   bool _isChecked2 = false;
+  bool _isChecked3 = false;
+  bool _isChecked4 = false;
+  bool _isChecked5 = false;
   TextEditingController controller;
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
@@ -57,6 +66,24 @@ class _LabInfoState extends State<LabInfo> {
   }
 
   void onChanged2(bool value) {
+    setState(() {
+      _isChecked2 = value;
+    });
+  }
+
+  void onChanged3(bool value) {
+    setState(() {
+      _isChecked2 = value;
+    });
+  }
+
+  void onChanged4(bool value) {
+    setState(() {
+      _isChecked2 = value;
+    });
+  }
+
+  void onChanged5(bool value) {
     setState(() {
       _isChecked2 = value;
     });
@@ -164,6 +191,9 @@ class _LabInfoState extends State<LabInfo> {
                                   onChanged1(value);
                                   setState(() {
                                     labSelect = labNames[1];
+                                    _firestore
+                                        .collection("lab names")
+                                        .add({'lab2': labSelect});
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
                                     }
@@ -220,6 +250,9 @@ class _LabInfoState extends State<LabInfo> {
                                   onChanged2(value);
                                   setState(() {
                                     labSelect = labNames[2];
+                                    _firestore
+                                        .collection("lab names")
+                                        .add({'lab3': labSelect});
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
                                     }
@@ -266,48 +299,55 @@ class _LabInfoState extends State<LabInfo> {
                         decoration: buildBoxDecoration(),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: FlatButton(
-                            onPressed: () {
-                              setState(() {
-                                Navigator.pushNamed(context, Lab1.id);
-                              });
-                            },
-                            highlightColor: Colors.cyan,
-                            focusColor: Colors.cyan.shade200,
-                            textColor: Colors.black,
-                            splashColor: Colors.cyan.shade200,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text("Malva Laboratories",
-                                    style: TextStyle(
-                                        fontSize: 19,
-                                        color: Colors.black,
-                                        fontFamily: "Poppins-Bold",
-                                        letterSpacing: .6)),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                ListTile(
-                                    title: Text(
-                                        "Address: East Hill, Kozhikode, Kerala 673005"),
-                                    leading: Icon(Icons.location_city)),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: Text(
-                                        "220/-",
-                                        style: TextStyle(
-                                            color: Colors.blue,
-                                            fontFamily: "Poppins-Medium",
-                                            fontSize: 15),
-                                      ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              CheckboxListTile(
+                                activeColor: Theme.of(context).primaryColor,
+                                value: _isChecked3,
+                                onChanged: (bool value) {
+                                  onChanged3(value);
+                                  setState(() {
+                                    labSelect = labNames[3];
+                                    _firestore.collection("lab names").add({
+                                      'lab4': labSelect,
+                                    });
+                                    if (labSelect.isEmpty) {
+                                      return "Select a lab";
+                                    }
+                                    Navigator.pushNamed(
+                                        context, BookingScreen.id);
+                                  });
+                                },
+                              ),
+                              Text("Malva Laboratories",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      color: Colors.black,
+                                      fontFamily: "Poppins-Bold",
+                                      letterSpacing: .6)),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              ListTile(
+                                  title: Text(
+                                      "Address: East Hill, Kozhikode, Kerala 673005"),
+                                  leading: Icon(Icons.location_city)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: Text(
+                                      "220/-",
+                                      style: TextStyle(
+                                          color: Colors.blue,
+                                          fontFamily: "Poppins-Medium",
+                                          fontSize: 15),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -318,48 +358,55 @@ class _LabInfoState extends State<LabInfo> {
                         decoration: buildBoxDecoration(),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: FlatButton(
-                            onPressed: () {
-                              setState(() {
-                                Navigator.pushNamed(context, Lab1.id);
-                              });
-                            },
-                            highlightColor: Colors.cyan,
-                            focusColor: Colors.cyan.shade200,
-                            textColor: Colors.black,
-                            splashColor: Colors.cyan.shade200,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text("Neethi Labs and Scans",
-                                    style: TextStyle(
-                                        fontSize: 19,
-                                        color: Colors.black,
-                                        fontFamily: "Poppins-Bold",
-                                        letterSpacing: .6)),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                ListTile(
-                                    title: Text(
-                                        "Address: P.O, Chelannur, Kerala 673317"),
-                                    leading: Icon(Icons.location_city)),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: Text(
-                                        "250/-",
-                                        style: TextStyle(
-                                            color: Colors.blue,
-                                            fontFamily: "Poppins-Medium",
-                                            fontSize: 15),
-                                      ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              CheckboxListTile(
+                                activeColor: Theme.of(context).primaryColor,
+                                value: _isChecked4,
+                                onChanged: (bool value) {
+                                  onChanged4(value);
+                                  setState(() {
+                                    labSelect = labNames[4];
+                                    _firestore
+                                        .collection("lab names")
+                                        .add({'lab5': labSelect});
+                                    if (labSelect.isEmpty) {
+                                      return "Select a lab";
+                                    }
+                                    Navigator.pushNamed(
+                                        context, BookingScreen.id);
+                                  });
+                                },
+                              ),
+                              Text("Neethi Labs and Scans",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      color: Colors.black,
+                                      fontFamily: "Poppins-Bold",
+                                      letterSpacing: .6)),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              ListTile(
+                                  title: Text(
+                                      "Address: P.O, Chelannur, Kerala 673317"),
+                                  leading: Icon(Icons.location_city)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: Text(
+                                      "250/-",
+                                      style: TextStyle(
+                                          color: Colors.blue,
+                                          fontFamily: "Poppins-Medium",
+                                          fontSize: 15),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -370,48 +417,55 @@ class _LabInfoState extends State<LabInfo> {
                         decoration: buildBoxDecoration(),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: FlatButton(
-                            onPressed: () {
-                              setState(() {
-                                Navigator.pushNamed(context, Lab1.id);
-                              });
-                            },
-                            highlightColor: Colors.cyan,
-                            focusColor: Colors.cyan.shade200,
-                            textColor: Colors.black,
-                            splashColor: Colors.cyan.shade200,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text("Plasma Diagnostic Services",
-                                    style: TextStyle(
-                                        fontSize: 19,
-                                        color: Colors.black,
-                                        fontFamily: "Poppins-Bold",
-                                        letterSpacing: .6)),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                ListTile(
-                                    title: Text(
-                                        "Address: Wayanad Rd, near Thayat Temple, Eranhipaalam, Bilathikkulam, Kozhikode, Kerala 673006"),
-                                    leading: Icon(Icons.location_city)),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: Text(
-                                        "200/-",
-                                        style: TextStyle(
-                                            color: Colors.blue,
-                                            fontFamily: "Poppins-Medium",
-                                            fontSize: 15),
-                                      ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              CheckboxListTile(
+                                activeColor: Theme.of(context).primaryColor,
+                                value: _isChecked5,
+                                onChanged: (bool value) {
+                                  onChanged5(value);
+                                  setState(() {
+                                    labSelect = labNames[5];
+                                    _firestore
+                                        .collection("lab names")
+                                        .add({'lab6': labSelect});
+                                    if (labSelect.isEmpty) {
+                                      return "Select a lab";
+                                    }
+                                    Navigator.pushNamed(
+                                        context, BookingScreen.id);
+                                  });
+                                },
+                              ),
+                              Text("Plasma Diagnostic Services",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      color: Colors.black,
+                                      fontFamily: "Poppins-Bold",
+                                      letterSpacing: .6)),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              ListTile(
+                                  title: Text(
+                                      "Address: Wayanad Rd, near Thayat Temple, Eranhipaalam, Bilathikkulam, Kozhikode, Kerala 673006"),
+                                  leading: Icon(Icons.location_city)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: Text(
+                                      "200/-",
+                                      style: TextStyle(
+                                          color: Colors.blue,
+                                          fontFamily: "Poppins-Medium",
+                                          fontSize: 15),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -437,7 +491,7 @@ class _LabInfoState extends State<LabInfo> {
       ),
       hintText: 'Search for the Laboratory',
       hintStyle: TextStyle(
-          fontFamily: "Lobster-Regular", color: Colors.cyan, fontSize: 23),
+          fontFamily: "Lobster-Regular", color: Colors.grey, fontSize: 21),
       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(32.0)),

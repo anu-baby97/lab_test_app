@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lab_test_booking_app/Screens/Lab1.dart';
+
 import 'package:lab_test_booking_app/Screens/LabInfo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class TestInfo extends StatefulWidget {
@@ -12,18 +13,18 @@ class TestInfo extends StatefulWidget {
 }
 
 List testName = [
-  "Blood",
-  "Covid19",
-  "Glucose",
-  /*ECG,
-  Cholestrol,
-  CBC,
-  KFT,
-  LFT,
-  PathologyTest,
-  AldoSteroneTest,
-  AmnioticFluidTest,
-  AmylaseTest,
+  "Blood Test",
+  "Covid19 Test",
+  "Glucose Test",
+  "ECG",
+  "Cholestrol Test",
+  "CBC",
+  "KFT",
+  "LFT",
+  "Pathology Test",
+  "CMP",
+  "Amniotic Fluid Test",
+  /*AmylaseTest,
   CMP,
   CalcitoninTest,
   GlobulinTest*/
@@ -36,6 +37,7 @@ class _TestInfoState extends State<TestInfo> {
   bool showSpinner = false;
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
+  User loggedUsersName;
   void getCurrentUser() async {
     try {
       final user = _auth.currentUser;
@@ -61,25 +63,37 @@ class _TestInfoState extends State<TestInfo> {
   }
 
   Widget addRadioButton(int btnValue, String title) {
-    return Row(
-      children: <Widget>[
-        Text(title),
-        SizedBox(width: 20),
-        Radio(
-          activeColor: Theme.of(context).primaryColor,
-          value: testName[btnValue],
-          groupValue: testSelect,
-          onChanged: (value) {
-            setState(() {
-              print(value);
-              testSelect = value;
-              if (testSelect.isEmpty) {
-                return "Select a test";
-              }
-            });
-          },
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontSize: 18, fontFamily: "Poppins-Medium"),
+          ),
+          Flexible(child: SizedBox(width: double.infinity)),
+          Radio(
+            activeColor: Theme.of(context).primaryColor,
+            value: testName[btnValue],
+            groupValue: testSelect,
+            onChanged: (value) {
+              setState(() {
+                print(value);
+                testSelect = value;
+                _firestore.collection("test names").add({
+                  'Test Name': testSelect,
+                  'Current Logged User': loggedUser,
+                });
+
+                Navigator.pushNamed(context, LabInfo.id);
+                if (testSelect.isEmpty) {
+                  return "Select a test";
+                }
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -92,6 +106,7 @@ class _TestInfoState extends State<TestInfo> {
           icon: new Icon(Icons.arrow_back),
           color: Colors.cyan,
           onPressed: () {
+            _auth.signOut();
             Navigator.pop(context);
           },
         ),
@@ -99,7 +114,7 @@ class _TestInfoState extends State<TestInfo> {
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
-          padding: const EdgeInsets.only(top: 15),
+          padding: const EdgeInsets.all(2),
           child: SafeArea(
             child: CustomScrollView(
               slivers: [
@@ -137,139 +152,37 @@ class _TestInfoState extends State<TestInfo> {
                       ),
                       Container(
                         decoration: buildBoxDecoration(),
-                        child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                Navigator.pushNamed(context, Lab1.id);
-                              });
-                            },
-                            child: addRadioButton(1, "Covid-19 Test")),
+                        child: addRadioButton(1, "Covid-19 Test"),
                       ),
                       Container(
                           decoration: buildBoxDecoration(),
                           child: addRadioButton(2, "Glucose Test")),
-
-                      /*Container(
-                        decoration: buildBoxDecoration(),
-                        child: ListTile(
-                          title: Text("ECG "),
-                          trailing: Radio(
-                              value: TestName.ECG,
-                              groupValue: _testName,
-                              onChanged: (TestName value) {
-                                setState(() {
-                                  _testName = value;
-                                });
-                              }),
-                        ),
-                      ),
                       Container(
-                        decoration: buildBoxDecoration(),
-                        child: ListTile(
-                          title: Text("CBC"),
-                          trailing: Radio(
-                              value: TestName.CBC,
-                              groupValue: _testName,
-                              onChanged: (TestName value) {
-                                setState(() {
-                                  _testName = value;
-                                });
-                              }),
-                        ),
-                      ),
+                          decoration: buildBoxDecoration(),
+                          child: addRadioButton(3, "ECG")),
                       Container(
-                        decoration: buildBoxDecoration(),
-                        child: ListTile(
-                          title: Text("Calcitonin Test"),
-                          trailing: Radio(
-                              value: TestName.CalcitoninTest,
-                              groupValue: _testName,
-                              onChanged: (TestName value) {
-                                setState(() {
-                                  _testName = value;
-                                });
-                              }),
-                        ),
-                      ),
+                          decoration: buildBoxDecoration(),
+                          child: addRadioButton(4, "Cholestrol Test")),
                       Container(
-                        decoration: buildBoxDecoration(),
-                        child: ListTile(
-                          title: Text("Amylase Test"),
-                          trailing: Radio(
-                              value: TestName.AmylaseTest,
-                              groupValue: _testName,
-                              onChanged: (TestName value) {
-                                setState(() {
-                                  _testName = value;
-                                });
-                              }),
-                        ),
-                      ),
+                          decoration: buildBoxDecoration(),
+                          child: addRadioButton(5, "CBC")),
                       Container(
-                        decoration: buildBoxDecoration(),
-                        child: ListTile(
-                          title: Text("Aldosterone Test"),
-                          trailing: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                Navigator.pushNamed(context, Lab1.id);
-                              });
-                            },
-                            child: Radio(
-                                value: TestName.AldoSteroneTest,
-                                groupValue: _testName,
-                                onChanged: (TestName value) {
-                                  setState(() {
-                                    _testName = value;
-                                  });
-                                }),
-                          ),
-                        ),
-                      ),
+                          decoration: buildBoxDecoration(),
+                          child: addRadioButton(6, "KFT")),
                       Container(
-                        decoration: buildBoxDecoration(),
-                        child: ListTile(
-                          title: Text("Cholestrol"),
-                          trailing: Radio(
-                              value: TestName.Cholestrol,
-                              groupValue: _testName,
-                              onChanged: (TestName value) {
-                                setState(() {
-                                  _testName = value;
-                                });
-                              }),
-                        ),
-                      ),
+                          decoration: buildBoxDecoration(),
+                          child: addRadioButton(7, "LFT")),
                       Container(
-                        decoration: buildBoxDecoration(),
-                        child: ListTile(
-                          title: Text("Amniotic Fluid Test"),
-                          trailing: Radio(
-                              value: TestName.AmnioticFluidTest,
-                              groupValue: _testName,
-                              onChanged: (TestName value) {
-                                setState(() {
-                                  _testName = value;
-                                });
-                              }),
-                        ),
-                      ),
+                          decoration: buildBoxDecoration(),
+                          child: addRadioButton(8, "Pathology Test")),
                       Container(
-                        decoration: buildBoxDecoration(),
-                        child: ListTile(
-                          title: Text("Globulin Test"),
-                          trailing: Radio(
-                              value: TestName.GlobulinTest,
-                              groupValue: _testName,
-                              onChanged: (TestName value) {
-                                setState(() {
-                                  _testName = value;
-                                });
-                              }),
-                        ),
-                      ),*/
+                          decoration: buildBoxDecoration(),
+                          child: addRadioButton(9, "CMP")),
+                      Container(
+                          decoration: buildBoxDecoration(),
+                          child: addRadioButton(10, "Amniotic Fluid Test")),
                       SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                       Center(
                         child: FlatButton(
