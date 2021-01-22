@@ -27,12 +27,12 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   Widget addTimeSlot(String slot) {
-    return Container(
-      decoration: buildBoxDecoration(),
-      width: 107,
-      height: 60,
-      child: Padding(
-        padding: const EdgeInsets.all(6.0),
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        decoration: buildBoxDecoration(),
+        width: 107,
+        height: 60,
         child: Center(
           child: Text(
             slot,
@@ -246,7 +246,9 @@ class _BookingScreenState extends State<BookingScreen> {
               offset: Offset(0.0, 0.0),
               blurRadius: 15.0),
           BoxShadow(
-              color: Colors.grey, offset: Offset(0.0, 0.0), blurRadius: 10.0),
+              color: Colors.grey.shade500,
+              offset: Offset(0.0, 0.0),
+              blurRadius: 10.0),
         ]);
   }
 }
