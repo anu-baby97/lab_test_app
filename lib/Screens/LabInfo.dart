@@ -131,9 +131,8 @@ class _LabInfoState extends State<LabInfo> {
                                     onChanged(value);
                                     setState(() {
                                       labSelect = labNames[0];
-                                      _firestore
-                                          .collection("lab names")
-                                          .add({'lab1': labSelect});
+                                      _firestore.collection("appointments").add(
+                                          {'Selected Laboratory': labSelect});
                                       if (labSelect.isEmpty) {
                                         return "Select a lab";
                                       }
@@ -191,9 +190,8 @@ class _LabInfoState extends State<LabInfo> {
                                   onChanged1(value);
                                   setState(() {
                                     labSelect = labNames[1];
-                                    _firestore
-                                        .collection("lab names")
-                                        .add({'lab2': labSelect});
+                                    _firestore.collection("appointments").add(
+                                        {'Selected Laboratory': labSelect});
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
                                     }
@@ -250,9 +248,8 @@ class _LabInfoState extends State<LabInfo> {
                                   onChanged2(value);
                                   setState(() {
                                     labSelect = labNames[2];
-                                    _firestore
-                                        .collection("lab names")
-                                        .add({'lab3': labSelect});
+                                    _firestore.collection("appointments").add(
+                                        {'Selected Laboratory': labSelect});
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
                                     }
@@ -309,8 +306,8 @@ class _LabInfoState extends State<LabInfo> {
                                   onChanged3(value);
                                   setState(() {
                                     labSelect = labNames[3];
-                                    _firestore.collection("lab names").add({
-                                      'lab4': labSelect,
+                                    _firestore.collection("appointments").add({
+                                      'Selected Laboratory': labSelect,
                                     });
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
@@ -368,9 +365,8 @@ class _LabInfoState extends State<LabInfo> {
                                   onChanged4(value);
                                   setState(() {
                                     labSelect = labNames[4];
-                                    _firestore
-                                        .collection("lab names")
-                                        .add({'lab5': labSelect});
+                                    _firestore.collection("appointments").add(
+                                        {'Selected Laboratory': labSelect});
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
                                     }
@@ -427,9 +423,8 @@ class _LabInfoState extends State<LabInfo> {
                                   onChanged5(value);
                                   setState(() {
                                     labSelect = labNames[5];
-                                    _firestore
-                                        .collection("lab names")
-                                        .add({'lab6': labSelect});
+                                    _firestore.collection("appointments").add(
+                                        {'Selected Laboratory': labSelect});
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
                                     }

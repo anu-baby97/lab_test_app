@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lab_test_booking_app/Screens/AdminLogin.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:lab_test_booking_app/Screens/RegistrationScreen.dart';
 import 'package:lab_test_booking_app/Screens/Forgot Password.dart';
@@ -153,10 +154,22 @@ class _LoginScreenState extends State<LoginScreen>
               ListTile(
                 title: Text("Patient"),
                 leading: Icon(Icons.person),
+                onTap: () {
+                  setState(() {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, LoginScreen.id, (route) => true);
+                  });
+                },
               ),
               ListTile(
                 title: Text("Admin"),
                 leading: Icon(Icons.supervisor_account),
+                onTap: () {
+                  setState(() {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, AdminLogin.id, (route) => true);
+                  });
+                },
               )
             ],
           )),
@@ -380,6 +393,39 @@ class _LoginScreenState extends State<LoginScreen>
                                               setState(() {
                                                 showSpinner = false;
                                               });
+                                            } else {
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Center(
+                                                        child: Text(
+                                                          "Username or Password is Incorrect",
+                                                          style: TextStyle(
+                                                              fontSize: 20),
+                                                        ),
+                                                      ),
+                                                      actions: <Widget>[
+                                                        FlatButton(
+                                                          child: Text(
+                                                              "Try Again",
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      15)),
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                            setState(() {
+                                                              showSpinner =
+                                                                  false;
+                                                            });
+                                                          },
+                                                        )
+                                                      ],
+                                                    );
+                                                  });
                                             }
                                           } catch (e) {
                                             print(e);

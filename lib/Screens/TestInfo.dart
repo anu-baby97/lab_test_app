@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -80,9 +81,12 @@ class _TestInfoState extends State<TestInfo> {
               setState(() {
                 print(value);
                 testSelect = value;
-                _firestore.collection("test names").add({
+                _firestore
+                    .collection("appointments")
+                    .doc(loggedInUser.uid)
+                    .set({
+                  'Registered Email Id': loggedUser,
                   'Test Name': testSelect,
-                  'Current Logged User': loggedUser,
                 });
 
                 Navigator.pushNamed(context, LabInfo.id);
@@ -103,7 +107,7 @@ class _TestInfoState extends State<TestInfo> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+          icon: new Icon(Icons.arrow_back_ios),
           color: Colors.cyan,
           onPressed: () {
             _auth.signOut();
@@ -184,7 +188,13 @@ class _TestInfoState extends State<TestInfo> {
                       SizedBox(
                         height: 15,
                       ),
-                      Center(
+                      /*BottomAppBar(
+
+                          child: AppBar(
+                        backgroundColor: Colors.cyan.shade200,
+                        title: Text("NEXT"),
+                      )),*/
+                      /*Center(
                         child: FlatButton(
                           onPressed: () async {
                             _firestore.collection("test names").add({
@@ -212,7 +222,7 @@ class _TestInfoState extends State<TestInfo> {
                                 fontSize: 27),
                           ),
                         ),
-                      ),
+                      ),*/
                     ]),
                   ],
                 )),

@@ -1,254 +1,247 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lab_test_booking_app/Screens/AppointmentInfo.dart';
 
 class BookingScreen extends StatefulWidget {
-  static const String id = "BookingDemo";
+  static const String id = "BookingScreen";
+
   @override
   _BookingScreenState createState() => _BookingScreenState();
 }
 
 class _BookingScreenState extends State<BookingScreen> {
-  Widget addBookingDate(String title1, String title2, String title3) {
-    return Padding(
-      padding: const EdgeInsets.all(11.0),
-      child: Column(
-        children: [
-          Text(
-            title1,
-            style: TextStyle(fontFamily: "Poppins-Medium", fontSize: 25),
-          ),
-          Text(title2,
-              style: TextStyle(fontFamily: "Poppins-Medium", fontSize: 20)),
-          Text(title3,
-              style: TextStyle(fontFamily: "Poppins-Medium", fontSize: 20))
-        ],
-      ),
-    );
-  }
+  DateTime selectedDate;
+  DateTime selectedTime;
+  DateTime initialTime;
+  DateTime now;
+  final _firestore = FirebaseFirestore.instance;
 
-  Widget addTimeSlot(String slot) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        decoration: buildBoxDecoration(),
-        width: 107,
-        height: 60,
-        child: Center(
-          child: Text(
-            slot,
-            style: TextStyle(fontFamily: "Poppins-Medium", fontSize: 20),
-          ),
-        ),
-      ),
-    );
-  }
+  List<DateTime> dateList = List();
+  List<DateTime> timeSlotList = List();
 
-  Widget addRowOfTimeSlots(int slotnos, Icon sloticon) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              sloticon,
-              SizedBox(
-                width: 20,
-              ),
-              Text(
-                " $slotnos Slots",
-                style: TextStyle(fontFamily: "Lobster-Regular", fontSize: 30),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-        ],
-      ),
-    );
+  @override
+  void initState() {
+    now = DateTime.now();
+    selectedDate = now;
+    initialTime = DateTime(now.year, now.month, now.day, 9, 30);
+    for (var i = 0; i < 10; i++) {
+      dateList.add(now.add(Duration(days: i)));
+    }
+    for (var i = 0; i < 13; i++) {
+      timeSlotList.add(initialTime.add(Duration(minutes: i * 30)));
+    }
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.cyan.shade100,
-        appBar: AppBar(
-          backgroundColor: Colors.cyan.shade200,
-          title: Center(
-            child: Text(
-              "Book Your Time Slot Here",
-              style: TextStyle(fontFamily: "Lobster-Regular", fontSize: 25),
-            ),
-          ),
-          leading: new IconButton(
-            icon: new Icon(
-              Icons.book_online_outlined,
-              size: 30,
-            ),
-            color: Colors.cyan,
-            onPressed: () {},
-          ),
+      backgroundColor: Colors.cyan.shade100,
+      appBar: AppBar(
+        backgroundColor: Colors.cyan.shade200,
+        leading: Icon(Icons.book_online_outlined),
+        title: Text(
+          "Book Your Slot Here",
+          style: TextStyle(fontSize: 23, fontFamily: 'Poppins-Medium'),
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                SingleChildScrollView(
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            setState(() {
+              _firestore.collection("appointments".toString()).add({
+                'Date and Time': selectedTime,
+              });
+              Navigator.pushNamedAndRemoveUntil(
+                  context, AppointmentInfo.id, (route) => true);
+            });
+          },
+          label: Text(
+            "Confirm",
+            style: TextStyle(
+                fontFamily: 'Poppins-Medium',
+                color: Colors.white,
+                fontSize: 20),
+          )),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15, bottom: 10, top: 10),
+                child: Text(
+                  "Select Date",
+                  style: TextStyle(fontFamily: "Poppins-Bold", fontSize: 23),
+                ),
+              ),
+              Container(
+                height: 150,
+                child: ListView(
+                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    child: Row(
+                  children: [
+                    for (var _date in dateList)
+                      Padding(
+                        padding: const EdgeInsets.all(7),
+                        child: InkWell(
+                          onTap: () async {
+                            setState(() {
+                              selectedDate = _date;
+                            });
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  color: selectedDate != null &&
+                                          selectedDate == _date
+                                      ? Colors.blue
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.shade200,
+                                        offset: Offset(0.0, 0.0),
+                                        blurRadius:
+                                            selectedDate == _date ? 0 : 5.0),
+                                    BoxShadow(
+                                        color: Colors.grey.shade500,
+                                        offset: Offset(0.0, 0.0),
+                                        blurRadius:
+                                            selectedDate == _date ? 0 : 5.0),
+                                  ]),
+                              child: addBookingDate(_date)),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(7),
-                          child: Container(
-                            decoration: buildBoxDecoration(),
-                            child: addBookingDate("13", "April", "2021"),
+                          padding: const EdgeInsets.only(left: 15, bottom: 10),
+                          child: Text(
+                            "Select Time",
+                            style: TextStyle(
+                                fontFamily: "Poppins-Bold", fontSize: 23),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(7),
-                          child: Container(
-                              decoration: buildBoxDecoration(),
-                              child: addBookingDate("14", "April", "2021")),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(7),
-                          child: Container(
-                              decoration: buildBoxDecoration(),
-                              child: addBookingDate("15", "April", "2021")),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(7),
-                          child: Container(
-                              decoration: buildBoxDecoration(),
-                              child: addBookingDate("16", "April", "2021")),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(7),
-                          child: Container(
-                              decoration: buildBoxDecoration(),
-                              child: addBookingDate("17", "April", "2021")),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(7),
-                          child: Container(
-                              decoration: buildBoxDecoration(),
-                              child: addBookingDate("18", "April", "2021")),
                         ),
                       ],
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 9),
+                      child: Wrap(
+                        runSpacing: 15.0,
+                        children: [
+                          for (var _timeSlot in timeSlotList)
+                            addTimeSlot(DateTime(
+                                selectedDate.year,
+                                selectedDate.month,
+                                selectedDate.day,
+                                _timeSlot.hour,
+                                _timeSlot.minute))
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.2)
+                  ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      addRowOfTimeSlots(
-                          7,
-                          Icon(
-                            Icons.wb_sunny,
-                            color: Colors.yellow,
-                            size: 35,
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 9),
-                        child: Wrap(
-                          runSpacing: 15.0,
-                          children: [
-                            addTimeSlot("9.00 Am"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            addTimeSlot("9.30 Am"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            addTimeSlot("10.00 Am"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            addTimeSlot("10.30 Am"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            addTimeSlot("11.00 Am"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            addTimeSlot("11.30 Am"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            addTimeSlot("12.00 Pm"),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      addRowOfTimeSlots(
-                          6,
-                          Icon(Icons.wb_sunny_sharp,
-                              color: Colors.yellow, size: 35)),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 9),
-                        child: Wrap(
-                          runSpacing: 15.0,
-                          children: [
-                            addTimeSlot("1.30 Am"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            addTimeSlot("2.00 Pm"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            addTimeSlot("2.30 Pm"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            addTimeSlot("3.00 Pm"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            addTimeSlot("3.30 Pm"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            addTimeSlot("4.00 Pm"),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
-  BoxDecoration buildBoxDecoration() {
-    return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.grey.shade200,
-              offset: Offset(0.0, 0.0),
-              blurRadius: 15.0),
-          BoxShadow(
-              color: Colors.grey.shade500,
-              offset: Offset(0.0, 0.0),
-              blurRadius: 10.0),
-        ]);
+  Widget addBookingDate(DateTime _date) {
+    return Padding(
+      padding: const EdgeInsets.all(11.0),
+      child: Column(
+        children: [
+          Text(
+            _date.day.toString(),
+            style: TextStyle(
+                color: _date == selectedDate ? Colors.white : Colors.black,
+                fontFamily: "Poppins-Medium",
+                fontSize: 25),
+          ),
+          Text(getMonth(_date),
+              style: TextStyle(
+                  color: _date == selectedDate ? Colors.white : Colors.black,
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 20)),
+          Text(_date.year.toString(),
+              style: TextStyle(
+                  color: _date == selectedDate ? Colors.white : Colors.black,
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 20))
+        ],
+      ),
+    );
+  }
+
+  Widget addTimeSlot(DateTime _time) {
+    return InkWell(
+      onTap: () async {
+        if (_time.isAfter(now)) {
+          setState(() {
+            selectedTime = _time;
+          });
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: selectedTime == _time ? Colors.blue : Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                  color: selectedTime == _time
+                      ? Colors.transparent
+                      : Colors.grey.shade200,
+                  offset: Offset(0.0, 0.0),
+                  blurRadius: 15.0),
+              BoxShadow(
+                  color: selectedTime == _time
+                      ? Colors.transparent
+                      : Colors.grey.shade500,
+                  offset: Offset(0.0, 0.0),
+                  blurRadius: 10.0),
+            ]),
+        width: 107,
+        height: 60,
+        margin: EdgeInsets.only(right: 15),
+        child: Center(
+          child: Text(
+            (_time.hour.toString()) +
+                ":" +
+                (('0' + _time.minute.toString()).substring(
+                    _time.minute.toString().length - 1,
+                    _time.minute.toString().length + 1)),
+            style: TextStyle(
+              fontFamily: "Poppins-Medium",
+              fontSize: 20,
+              color: _time.isBefore(now)
+                  ? Colors.grey
+                  : selectedTime == _time
+                      ? Colors.white
+                      : Colors.black,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  getMonth(DateTime time) {
+    return new DateFormat('MMM').format(time);
   }
 }
