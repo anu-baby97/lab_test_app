@@ -366,7 +366,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                             content: Text(
                                                 "The passwords do not match"),
                                             actions: <Widget>[
-                                              FlatButton(
+                                              TextButton(
                                                 child: Text("Close"),
                                                 onPressed: () {
                                                   Navigator.of(context).pop();

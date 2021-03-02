@@ -16,13 +16,6 @@ User loggedInUser;
 User loggedUsersName;
 
 class _AppointmentInfoState extends State<AppointmentInfo> {
-  /*void getDetails() async {
-    await _firestore.collection("appointments").snapshots().listen((result) {
-      result.docs.forEach((result) {
-        print(result.data());
-      });
-    });
-  }*/
 
   void getCurrentUser() async {
     try {
@@ -78,82 +71,10 @@ class _AppointmentInfoState extends State<AppointmentInfo> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
         child: Column(
-          children: [
-            MessagesStream(),
-          ],
+
         ),
       ),
     );
   }
 }
 
-class MessagesStream extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('appointments').snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.lightBlueAccent,
-            ),
-          );
-        }
-        final details = snapshot.data.docs.reversed;
-        List<MessageBubble> messageBubbles = [];
-        for (var detail in details) {
-          final detailsText = detail.data().toString();
-          final user = detail.data().toString();
-
-          final currentUser = loggedInUser.email;
-
-          final messageBubble = MessageBubble(
-            sender: user,
-            text: detailsText,
-            isMe: currentUser == user,
-          );
-
-          messageBubbles.add(messageBubble);
-        }
-        return Expanded(
-          child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-            children: messageBubbles,
-          ),
-        );
-      },
-    );
-  }
-}
-
-class MessageBubble extends StatelessWidget {
-  MessageBubble({this.sender, this.text, this.isMe});
-
-  final String sender;
-  final String text;
-  final bool isMe;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(0), color: Colors.cyan.shade200),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-            child: Text(
-              text,
-              style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 18.0,
-                  fontFamily: "Poppins-Medium",
-                  fontWeight: FontWeight.normal),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

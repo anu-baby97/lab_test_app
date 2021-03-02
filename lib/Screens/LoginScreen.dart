@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen>
       child: SafeArea(
         child: new Scaffold(
           backgroundColor: Color(0XFFB9D9E8),
-          resizeToAvoidBottomPadding: true,
+            resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: Color(0XFFF1F7F8),
             iconTheme: IconThemeData(color: Colors.teal),
@@ -407,7 +407,7 @@ class _LoginScreenState extends State<LoginScreen>
                                                         ),
                                                       ),
                                                       actions: <Widget>[
-                                                        FlatButton(
+                                                        TextButton(
                                                           child: Text(
                                                               "Try Again",
                                                               style: TextStyle(
@@ -429,6 +429,38 @@ class _LoginScreenState extends State<LoginScreen>
                                             }
                                           } catch (e) {
                                             print(e);
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Center(
+                                                      child: Text(
+                                                        "Username or Password is Incorrect",
+                                                        style: TextStyle(
+                                                            fontSize: 20),
+                                                      ),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        child: Text(
+                                                            "Try Again",
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                15)),
+                                                        onPressed: () {
+                                                          Navigator.of(
+                                                              context)
+                                                              .pop();
+                                                          setState(() {
+                                                            showSpinner =
+                                                            false;
+                                                          });
+                                                        },
+                                                      )
+                                                    ],
+                                                  );
+                                                });
                                           }
                                         },
                                         child: Center(
