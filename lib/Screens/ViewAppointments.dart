@@ -4,46 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lab_test_booking_app/Screens/PaymentScreen.dart';
 
-class AppointmentInfo extends StatefulWidget {
-  static const String id = "AppointmentInfo";
+class ViewAppointment extends StatefulWidget {
+  static const String id = "ViewAppointment";
   @override
-  _AppointmentInfoState createState() => _AppointmentInfoState();
+  _ViewAppointmentState createState() => _ViewAppointmentState();
 }
 
 //final _firestore = FirebaseFirestore.instance;
 var firebaseUser = FirebaseAuth.instance.currentUser;
 final _auth = FirebaseAuth.instance;
 
-class _AppointmentInfoState extends State<AppointmentInfo> {
-  /*final CollectionReference patientDetails=FirebaseFirestore.instance.collection("appointments");
-  List detailsList = [];*/
-  /*Future getData()async {
-    List appointmentsList = [];
-    try {
-      await patientDetails.get().then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          appointmentsList.add(element.data);
-        });
-      });
-      return appointmentsList;
-    }
-    catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-  getPatientDetails()async{
-    dynamic result = await getData();
-    if(result==null){
-      print("Unable to retrieve");
-    }
-    else{
-      setState(() {
-        detailsList=result;
-      });
-    }
-  }*/
-
+class _ViewAppointmentState extends State<ViewAppointment> {
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
   void getCurrentUser() async {
@@ -80,21 +51,6 @@ class _AppointmentInfoState extends State<AppointmentInfo> {
           style: TextStyle(fontFamily: 'Poppins-Medium'),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            setState(() {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, PaymentScreen.id, (route) => true);
-            });
-          },
-          label: Text(
-            "PLACE THE APPOINTMENT",
-            style: TextStyle(
-                fontFamily: 'Poppins-Medium',
-                color: Colors.white,
-                fontSize: 17),
-          )),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.all(20),
@@ -124,7 +80,6 @@ class _AppointmentInfoState extends State<AppointmentInfo> {
                           snapshot.data.docs.map((DocumentSnapshot document) {
                         return Card(
                           child: ListTile(
-                            tileColor: Colors.cyan.shade100,
                             leading: Text("Test Name: ",
                                 style: TextStyle(
                                     fontFamily: 'Poppins-Medium',
@@ -160,7 +115,6 @@ class _AppointmentInfoState extends State<AppointmentInfo> {
                           snapshot.data.docs.map((DocumentSnapshot document) {
                         return Card(
                           child: ListTile(
-                            tileColor: Colors.cyan.shade200,
                             leading: Text("Lab Name: ",
                                 style: TextStyle(
                                     fontFamily: 'Poppins-Medium',
@@ -174,8 +128,8 @@ class _AppointmentInfoState extends State<AppointmentInfo> {
                   },
                 ),
               ),
-             SizedBox(
-              height: 60,
+              SizedBox(
+                height: 60,
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('Appointments')
@@ -194,16 +148,14 @@ class _AppointmentInfoState extends State<AppointmentInfo> {
 
                     return new ListView(
                       children:
-                      snapshot.data.docs.map((DocumentSnapshot document) {
+                          snapshot.data.docs.map((DocumentSnapshot document) {
                         return Card(
                           child: ListTile(
-                            tileColor: Colors.cyan.shade300,
                             leading: Text("Fees: ",
                                 style: TextStyle(
                                     fontFamily: 'Poppins-Medium',
                                     fontSize: 17)),
-                            title:
-                            Text(document["Fees"].toString()),
+                            title: Text(document["Fees"].toString()),
                           ),
                         );
                       }).toList(),
@@ -231,16 +183,14 @@ class _AppointmentInfoState extends State<AppointmentInfo> {
 
                     return new ListView(
                       children:
-                      snapshot.data.docs.map((DocumentSnapshot document) {
+                          snapshot.data.docs.map((DocumentSnapshot document) {
                         return Card(
                           child: ListTile(
-                            tileColor: Colors.cyan.shade400,
                             leading: Text("Date and Time: ",
                                 style: TextStyle(
                                     fontFamily: 'Poppins-Medium',
                                     fontSize: 17)),
-                            title:
-                            Text(document["Date and Time"].toString()),
+                            title: Text(document["Date and Time"].toString()),
                           ),
                         );
                       }).toList(),

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lab_test_booking_app/Screens/AdminLogin.dart';
+import 'package:lab_test_booking_app/Screens/HomeScreen.dart';
+import 'package:lab_test_booking_app/Services/authServices.dart';
+import 'package:lab_test_booking_app/Widgets/ProviderWidget.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:lab_test_booking_app/Screens/RegistrationScreen.dart';
 import 'package:lab_test_booking_app/Screens/Forgot Password.dart';
@@ -16,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
-  final _auth = FirebaseAuth.instance;
+  //final _auth = FirebaseAuth.instance;
   String email;
   String password;
   bool showSpinner = false;
@@ -142,7 +145,6 @@ class _LoginScreenState extends State<LoginScreen>
       child: SafeArea(
         child: new Scaffold(
           backgroundColor: Color(0XFFB9D9E8),
-            resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: Color(0XFFF1F7F8),
             iconTheme: IconThemeData(color: Colors.teal),
@@ -376,16 +378,14 @@ class _LoginScreenState extends State<LoginScreen>
                                                 showSpinner = true;
                                               });
 
-                                              final user = await _auth
+                                              final user = await AuthService()
                                                   .signInWithEmailAndPassword(
-                                                      email: email,
-                                                      password: password);
-
+                                                      email, password);
                                               if (user != null) {
                                                 Navigator
                                                     .pushNamedAndRemoveUntil(
                                                         context,
-                                                        TestInfo.id,
+                                                        HomeScreen.id,
                                                         (route) => true);
                                                 _controller.clear();
                                                 _controller1.clear();
@@ -414,6 +414,9 @@ class _LoginScreenState extends State<LoginScreen>
                                                                   fontSize:
                                                                       15)),
                                                           onPressed: () {
+                                                            _controller.clear();
+                                                            _controller1
+                                                                .clear();
                                                             Navigator.of(
                                                                     context)
                                                                 .pop();
@@ -443,18 +446,14 @@ class _LoginScreenState extends State<LoginScreen>
                                                     ),
                                                     actions: <Widget>[
                                                       TextButton(
-                                                        child: Text(
-                                                            "Try Again",
+                                                        child: Text("Try Again",
                                                             style: TextStyle(
-                                                                fontSize:
-                                                                15)),
+                                                                fontSize: 15)),
                                                         onPressed: () {
-                                                          Navigator.of(
-                                                              context)
+                                                          Navigator.of(context)
                                                               .pop();
                                                           setState(() {
-                                                            showSpinner =
-                                                            false;
+                                                            showSpinner = false;
                                                           });
                                                         },
                                                       )

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lab_test_booking_app/Screens/AppointmentInfo.dart';
+import 'package:lab_test_booking_app/Screens/TestInfo.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class BookingScreen extends StatefulWidget {
   static const String id = "BookingScreen";
@@ -17,12 +19,26 @@ class _BookingScreenState extends State<BookingScreen> {
   DateTime initialTime;
   DateTime now;
   final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  User loggedInUser;
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   List<DateTime> dateList = List();
   List<DateTime> timeSlotList = List();
 
   @override
   void initState() {
+    getCurrentUser();
     now = DateTime.now();
     selectedDate = now;
     initialTime = DateTime(now.year, now.month, now.day, 9, 30);
@@ -41,6 +57,7 @@ class _BookingScreenState extends State<BookingScreen> {
       backgroundColor: Colors.cyan.shade100,
       appBar: AppBar(
         backgroundColor: Colors.cyan.shade200,
+        automaticallyImplyLeading: false,
         leading: Icon(Icons.book_online_outlined),
         title: Text(
           "Book Your Slot Here",
@@ -50,8 +67,12 @@ class _BookingScreenState extends State<BookingScreen> {
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             setState(() {
-              _firestore.collection("appointments".toString()).add({
-                'Date and Time': selectedTime,
+              _firestore
+                  .collection("Appointments")
+                  .doc(loggedInUser.uid)
+                  .collection("Selected Booking Slot")
+                  .add({
+                'Date and Time': selectedTime.toString(),
               });
               Navigator.pushNamedAndRemoveUntil(
                   context, AppointmentInfo.id, (route) => true);
@@ -219,22 +240,30 @@ class _BookingScreenState extends State<BookingScreen> {
         width: 107,
         height: 60,
         margin: EdgeInsets.only(right: 15),
-        child: Center(
-          child: Text(
-            (_time.hour.toString()) +
-                ":" +
-                (('0' + _time.minute.toString()).substring(
-                    _time.minute.toString().length - 1,
-                    _time.minute.toString().length + 1)),
-            style: TextStyle(
-              fontFamily: "Poppins-Medium",
-              fontSize: 20,
-              color: _time.isBefore(now)
-                  ? Colors.grey
-                  : selectedTime == _time
-                      ? Colors.white
-                      : Colors.black,
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            children: [
+              Center(
+                child: Text(
+                  (_time.hour.toString()) +
+                      ":" +
+                      (('0' + _time.minute.toString()).substring(
+                          _time.minute.toString().length - 1,
+                          _time.minute.toString().length + 1)),
+                  style: TextStyle(
+                    fontFamily: "Poppins-Medium",
+                    fontSize: 20,
+                    color: _time.isBefore(now)
+                        ? Colors.grey
+                        : selectedTime == _time
+                            ? Colors.white
+                            : Colors.black,
+                  ),
+                ),
+              ),
+              //_time.hour<12?Text("  AM"):Text("  PM"),
+            ],
           ),
         ),
       ),

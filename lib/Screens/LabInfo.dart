@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lab_test_booking_app/Screens/BookingScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lab_test_booking_app/Widgets/ProviderWidget.dart';
 
 class LabInfo extends StatefulWidget {
   static const String id = "LabInfo";
@@ -9,17 +10,17 @@ class LabInfo extends StatefulWidget {
   _LabInfoState createState() => _LabInfoState();
 }
 
-List labNames = [
-  "Saroj Diagonistic Laboratory",
-  "Evegreen Diagonistics",
-  "GMC Laboratory",
-  "Malva Laboratories",
-  "Neethi Labs and Scans",
-  "Plasma Diagonistic Services"
-];
-
 class _LabInfoState extends State<LabInfo> {
+  List labNames = [
+    "Saroj Diagonistic Laboratory",
+    "Evegreen Diagonistics",
+    "GMC Laboratory",
+    "Malva Laboratories",
+    "Neethi Labs and Scans",
+    "Plasma Diagonistic Services"
+  ];
   String labSelect;
+  num charge;
   bool _isChecked = false;
   bool _isChecked1 = false;
   bool _isChecked2 = false;
@@ -28,6 +29,7 @@ class _LabInfoState extends State<LabInfo> {
   bool _isChecked5 = false;
   TextEditingController controller;
   final _firestore = FirebaseFirestore.instance;
+
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
   void getCurrentUser() async {
@@ -46,6 +48,11 @@ class _LabInfoState extends State<LabInfo> {
   initState() {
     super.initState();
     getCurrentUser();
+    /* _firestore
+        .collection("Lab Names").add(
+        {'Lab Names': labNames
+
+        });*/
   }
 
   @override
@@ -92,6 +99,10 @@ class _LabInfoState extends State<LabInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: const EdgeInsets.only(top: 15),
         child: SafeArea(
@@ -130,9 +141,23 @@ class _LabInfoState extends State<LabInfo> {
                                   onChanged: (bool value) {
                                     onChanged(value);
                                     setState(() {
+                                      charge = 250;
                                       labSelect = labNames[0];
-                                      _firestore.collection("appointments").add(
-                                          {'Selected Laboratory': labSelect});
+                                      _firestore
+                                          .collection("Appointments")
+                                          .doc(loggedInUser.uid)
+                                          .collection("Laboratory Selected")
+                                          .add({
+                                        'Selected Laboratory': labSelect,
+
+                                      });
+                                      _firestore
+                                          .collection("Appointments")
+                                          .doc(loggedInUser.uid)
+                                          .collection("Fees")
+                                          .add({
+                                        'Fees': charge,
+                                      });
                                       if (labSelect.isEmpty) {
                                         return "Select a lab";
                                       }
@@ -189,9 +214,22 @@ class _LabInfoState extends State<LabInfo> {
                                 onChanged: (bool value) {
                                   onChanged1(value);
                                   setState(() {
+                                    charge = 200;
                                     labSelect = labNames[1];
-                                    _firestore.collection("appointments").add(
-                                        {'Selected Laboratory': labSelect});
+                                    _firestore
+                                        .collection("Appointments")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Laboratory Selected")
+                                        .add({
+                                      'Selected Laboratory': labSelect,
+                                    });
+                                    _firestore
+                                        .collection("Appointments")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Fees")
+                                        .add({
+                                      'Fees': charge,
+                                    });
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
                                     }
@@ -247,9 +285,22 @@ class _LabInfoState extends State<LabInfo> {
                                 onChanged: (bool value) {
                                   onChanged2(value);
                                   setState(() {
+                                    charge = 240;
                                     labSelect = labNames[2];
-                                    _firestore.collection("appointments").add(
-                                        {'Selected Laboratory': labSelect});
+                                    _firestore
+                                        .collection("Appointments")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Laboratory Selected")
+                                        .add({
+                                      'Selected Laboratory': labSelect,
+                                    });
+                                    _firestore
+                                        .collection("Appointments")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Fees")
+                                        .add({
+                                      'Fees': charge,
+                                    });
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
                                     }
@@ -305,9 +356,21 @@ class _LabInfoState extends State<LabInfo> {
                                 onChanged: (bool value) {
                                   onChanged3(value);
                                   setState(() {
+                                    charge = 220;
                                     labSelect = labNames[3];
-                                    _firestore.collection("appointments").add({
+                                    _firestore
+                                        .collection("Appointments")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Laboratory Selected")
+                                        .add({
                                       'Selected Laboratory': labSelect,
+                                    });
+                                    _firestore
+                                        .collection("Appointments")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Fees")
+                                        .add({
+                                      'Fees': charge,
                                     });
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
@@ -364,9 +427,23 @@ class _LabInfoState extends State<LabInfo> {
                                 onChanged: (bool value) {
                                   onChanged4(value);
                                   setState(() {
+                                    charge = 230;
                                     labSelect = labNames[4];
-                                    _firestore.collection("appointments").add(
-                                        {'Selected Laboratory': labSelect});
+                                    _firestore
+                                        .collection("Appointments")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Laboratory Selected")
+                                        .add({
+                                      'Selected Laboratory': labSelect,
+
+                                    });
+                                    _firestore
+                                        .collection("Appointments")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Fees")
+                                        .add({
+                                      'Fees': charge,
+                                    });
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
                                     }
@@ -393,7 +470,7 @@ class _LabInfoState extends State<LabInfo> {
                                 children: <Widget>[
                                   Flexible(
                                     child: Text(
-                                      "250/-",
+                                      "230/-",
                                       style: TextStyle(
                                           color: Colors.blue,
                                           fontFamily: "Poppins-Medium",
@@ -422,9 +499,22 @@ class _LabInfoState extends State<LabInfo> {
                                 onChanged: (bool value) {
                                   onChanged5(value);
                                   setState(() {
+                                    charge = 210;
                                     labSelect = labNames[5];
-                                    _firestore.collection("appointments").add(
-                                        {'Selected Laboratory': labSelect});
+                                    _firestore
+                                        .collection("Appointments")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Laboratory Selected")
+                                        .add({
+                                      'Selected Laboratory': labSelect,
+                                    });
+                                    _firestore
+                                        .collection("Appointments")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Fees")
+                                        .add({
+                                      'Fees': charge,
+                                    });
                                     if (labSelect.isEmpty) {
                                       return "Select a lab";
                                     }
@@ -451,7 +541,7 @@ class _LabInfoState extends State<LabInfo> {
                                 children: <Widget>[
                                   Flexible(
                                     child: Text(
-                                      "200/-",
+                                      "210/-",
                                       style: TextStyle(
                                           color: Colors.blue,
                                           fontFamily: "Poppins-Medium",

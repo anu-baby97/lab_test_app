@@ -91,3 +91,36 @@ class _BookingDemoState extends State<BookingDemo> {
     );
   }
 }
+/* void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }*/
+/*
+ListTile(
+
+tileColor: Colors.cyan.shade100,
+leading: Text("Test Name: ",style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),
+title: Text(snapshot.data.docs[1]['Test Name'],style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),
+),
+ListTile(
+tileColor: Colors.cyan.shade200,
+leading: Text("Laboratory Name: ",style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),
+title: Text(snapshot.data.docs[2]['Selected Laboratory'],style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),
+),
+ListTile(
+tileColor: Colors.cyan.shade300,
+leading: Text("Date and Time: ",style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),
+title: Text(snapshot.data.docs[0]['Date and Time'],style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),
+),
+ListTile(
+tileColor: Colors.cyan.shade400,
+leading: Text("Fees: ",style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),
+title: Text(snapshot.data.docs[2]['Fees'].toString(),style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),
+),*/

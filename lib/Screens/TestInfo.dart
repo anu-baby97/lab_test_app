@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:lab_test_booking_app/Screens/BookingScreen.dart';
 import 'package:lab_test_booking_app/Screens/LabInfo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class TestInfo extends StatefulWidget {
@@ -33,7 +32,6 @@ List testName = [
 
 class _TestInfoState extends State<TestInfo> {
   String testSelect;
-  String loggedUser;
   final _firestore = FirebaseFirestore.instance;
   bool showSpinner = false;
   final _auth = FirebaseAuth.instance;
@@ -45,7 +43,6 @@ class _TestInfoState extends State<TestInfo> {
       if (user != null) {
         loggedInUser = user;
         print(loggedInUser.email);
-        loggedUser = loggedInUser.email;
       }
     } catch (e) {
       print(e);
@@ -56,6 +53,11 @@ class _TestInfoState extends State<TestInfo> {
   initState() {
     super.initState();
     getCurrentUser();
+    /* _firestore
+        .collection("Test Names").add(
+        {'Test Names': testName
+
+        });*/
   }
 
   @override
@@ -74,6 +76,8 @@ class _TestInfoState extends State<TestInfo> {
           ),
           Flexible(child: SizedBox(width: double.infinity)),
           Radio(
+            splashRadius: 50,
+            focusColor: Colors.blue,
             activeColor: Theme.of(context).primaryColor,
             value: testName[btnValue],
             groupValue: testSelect,
@@ -82,10 +86,10 @@ class _TestInfoState extends State<TestInfo> {
                 print(value);
                 testSelect = value;
                 _firestore
-                    .collection("appointments")
+                    .collection("Appointments")
                     .doc(loggedInUser.uid)
-                    .set({
-                  'Registered Email Id': loggedUser,
+                    .collection("Selected Test")
+                    .add({
                   'Test Name': testSelect,
                 });
 
@@ -106,14 +110,7 @@ class _TestInfoState extends State<TestInfo> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back_ios),
-          color: Colors.cyan,
-          onPressed: () {
-            _auth.signOut();
-            Navigator.pop(context);
-          },
-        ),
+        automaticallyImplyLeading: false,
       ),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,

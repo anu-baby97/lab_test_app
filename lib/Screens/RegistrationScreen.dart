@@ -15,6 +15,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
+  User loggedUser;
   final _firestore = FirebaseFirestore.instance;
   bool showSpinner = false;
   String name;
@@ -328,18 +329,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           color: Colors.transparent,
                           child: InkWell(
                             onTap: () async {
-                              _firestore.collection("patients").add({
-                                'name': name,
-                                'email': email,
-                                'dob': dob,
-                                'phone': phno,
-                                'gender': genderSelect,
-                                'address': address,
-                                'username': uname,
-                                'password': password,
-                                'confirmpassword': confirmpassword,
-                              });
-
                               try {
                                 if (_regFormKey.currentState.validate()) {
                                   setState(() {
@@ -349,6 +338,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     final newUser = await _auth
                                         .createUserWithEmailAndPassword(
                                             email: email, password: password);
+                                    loggedUser = newUser.user;
+                                    _firestore.collection("patients").add({
+                                      'name': name,
+                                      'email': email,
+                                      'dob': dob,
+                                      'phone': phno,
+                                      'gender': genderSelect,
+                                      'address': address,
+                                      'username': uname,
+                                      'password': password,
+                                      'confirmpassword': confirmpassword,
+                                      'id': loggedUser.uid
+                                    });
+
                                     if (newUser != null) {
                                       Navigator.pushNamedAndRemoveUntil(context,
                                           LoginScreen.id, (route) => true);
