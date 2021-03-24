@@ -144,7 +144,7 @@ class _LabInfoState extends State<LabInfo> {
                                       charge = 250;
                                       labSelect = labNames[0];
                                       _firestore
-                                          .collection("Appointments")
+                                          .collection("Appointments Summary")
                                           .doc(loggedInUser.uid)
                                           .collection("Laboratory Selected")
                                           .add({
@@ -152,7 +152,22 @@ class _LabInfoState extends State<LabInfo> {
 
                                       });
                                       _firestore
-                                          .collection("Appointments")
+                                          .collection("Appointments Completed")
+                                          .doc(loggedInUser.uid)
+                                          .collection("Laboratory Selected")
+                                          .add({
+                                        'Selected Laboratory': labSelect,
+
+                                      });
+                                      _firestore
+                                          .collection("Appointments Summary")
+                                          .doc(loggedInUser.uid)
+                                          .collection("Fees")
+                                          .add({
+                                        'Fees': charge,
+                                      });
+                                      _firestore
+                                          .collection("Appointments Completed")
                                           .doc(loggedInUser.uid)
                                           .collection("Fees")
                                           .add({
@@ -217,14 +232,29 @@ class _LabInfoState extends State<LabInfo> {
                                     charge = 200;
                                     labSelect = labNames[1];
                                     _firestore
-                                        .collection("Appointments")
+                                        .collection("Appointments Summary")
                                         .doc(loggedInUser.uid)
                                         .collection("Laboratory Selected")
                                         .add({
                                       'Selected Laboratory': labSelect,
                                     });
                                     _firestore
-                                        .collection("Appointments")
+                                        .collection("Appointments Completed")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Laboratory Selected")
+                                        .add({
+                                      'Selected Laboratory': labSelect,
+
+                                    });
+                                    _firestore
+                                        .collection("Appointments Summary")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Fees")
+                                        .add({
+                                      'Fees': charge,
+                                    });
+                                    _firestore
+                                        .collection("Appointments Completed")
                                         .doc(loggedInUser.uid)
                                         .collection("Fees")
                                         .add({
@@ -288,14 +318,29 @@ class _LabInfoState extends State<LabInfo> {
                                     charge = 240;
                                     labSelect = labNames[2];
                                     _firestore
-                                        .collection("Appointments")
+                                        .collection("Appointments Summary")
                                         .doc(loggedInUser.uid)
                                         .collection("Laboratory Selected")
                                         .add({
                                       'Selected Laboratory': labSelect,
                                     });
                                     _firestore
-                                        .collection("Appointments")
+                                        .collection("Appointments Completed")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Laboratory Selected")
+                                        .add({
+                                      'Selected Laboratory': labSelect,
+
+                                    });
+                                    _firestore
+                                        .collection("Appointments Summary")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Fees")
+                                        .add({
+                                      'Fees': charge,
+                                    });
+                                    _firestore
+                                        .collection("Appointments Completed")
                                         .doc(loggedInUser.uid)
                                         .collection("Fees")
                                         .add({
@@ -359,14 +404,29 @@ class _LabInfoState extends State<LabInfo> {
                                     charge = 220;
                                     labSelect = labNames[3];
                                     _firestore
-                                        .collection("Appointments")
+                                        .collection("Appointments Summary")
                                         .doc(loggedInUser.uid)
                                         .collection("Laboratory Selected")
                                         .add({
                                       'Selected Laboratory': labSelect,
                                     });
                                     _firestore
-                                        .collection("Appointments")
+                                        .collection("Appointments Completed")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Laboratory Selected")
+                                        .add({
+                                      'Selected Laboratory': labSelect,
+
+                                    });
+                                    _firestore
+                                        .collection("Appointments Summary")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Fees")
+                                        .add({
+                                      'Fees': charge,
+                                    });
+                                    _firestore
+                                        .collection("Appointments Completed")
                                         .doc(loggedInUser.uid)
                                         .collection("Fees")
                                         .add({
@@ -430,7 +490,7 @@ class _LabInfoState extends State<LabInfo> {
                                     charge = 230;
                                     labSelect = labNames[4];
                                     _firestore
-                                        .collection("Appointments")
+                                        .collection("Appointments Summary")
                                         .doc(loggedInUser.uid)
                                         .collection("Laboratory Selected")
                                         .add({
@@ -438,7 +498,22 @@ class _LabInfoState extends State<LabInfo> {
 
                                     });
                                     _firestore
-                                        .collection("Appointments")
+                                        .collection("Appointments Completed")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Laboratory Selected")
+                                        .add({
+                                      'Selected Laboratory': labSelect,
+
+                                    });
+                                    _firestore
+                                        .collection("Appointments Summary")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Fees")
+                                        .add({
+                                      'Fees': charge,
+                                    });
+                                    _firestore
+                                        .collection("Appointments Completed")
                                         .doc(loggedInUser.uid)
                                         .collection("Fees")
                                         .add({
@@ -502,14 +577,29 @@ class _LabInfoState extends State<LabInfo> {
                                     charge = 210;
                                     labSelect = labNames[5];
                                     _firestore
-                                        .collection("Appointments")
+                                        .collection("Appointments Summary")
                                         .doc(loggedInUser.uid)
                                         .collection("Laboratory Selected")
                                         .add({
                                       'Selected Laboratory': labSelect,
                                     });
                                     _firestore
-                                        .collection("Appointments")
+                                        .collection("Appointments Completed")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Laboratory Selected")
+                                        .add({
+                                      'Selected Laboratory': labSelect,
+
+                                    });
+                                    _firestore
+                                        .collection("Appointments Summary")
+                                        .doc(loggedInUser.uid)
+                                        .collection("Fees")
+                                        .add({
+                                      'Fees': charge,
+                                    });
+                                    _firestore
+                                        .collection("Appointments Completed")
                                         .doc(loggedInUser.uid)
                                         .collection("Fees")
                                         .add({

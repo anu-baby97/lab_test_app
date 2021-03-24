@@ -86,7 +86,11 @@ class _TestInfoState extends State<TestInfo> {
                 print(value);
                 testSelect = value;
                 _firestore
-                    .collection("Appointments")
+                    .collection("Appointments Summary").doc(loggedInUser.uid).set({
+                  'Test Name': testSelect,
+                });
+                _firestore
+                    .collection("Appointments Completed")
                     .doc(loggedInUser.uid)
                     .collection("Selected Test")
                     .add({
@@ -185,41 +189,6 @@ class _TestInfoState extends State<TestInfo> {
                       SizedBox(
                         height: 15,
                       ),
-                      /*BottomAppBar(
-
-                          child: AppBar(
-                        backgroundColor: Colors.cyan.shade200,
-                        title: Text("NEXT"),
-                      )),*/
-                      /*Center(
-                        child: FlatButton(
-                          onPressed: () async {
-                            _firestore.collection("test names").add({
-                              'Test Name': testSelect,
-                              'Current Logged User': loggedUser,
-                            });
-                            setState(() {
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, LabInfo.id, (route) => true);
-                              //showSpinner = true;
-                            });
-                          },
-                          highlightColor: Colors.cyan,
-                          focusColor: Colors.cyan.shade200,
-                          color: Colors.cyan.shade100,
-                          textColor: Colors.black,
-                          disabledColor: Colors.grey,
-                          disabledTextColor: Colors.red,
-                          splashColor: Colors.cyan.shade200,
-                          child: Text(
-                            "NEXT",
-                            style: TextStyle(
-                                fontFamily: "Lobster-Regular",
-                                color: Colors.cyan.shade800,
-                                fontSize: 27),
-                          ),
-                        ),
-                      ),*/
                     ]),
                   ],
                 )),

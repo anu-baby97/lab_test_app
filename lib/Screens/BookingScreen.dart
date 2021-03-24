@@ -68,7 +68,13 @@ class _BookingScreenState extends State<BookingScreen> {
           onPressed: () {
             setState(() {
               _firestore
-                  .collection("Appointments")
+                  .collection("Appointments Summary")
+                  .doc(loggedInUser.email)
+                  .set({
+                'Date and Time': selectedTime.toString(),
+              });
+              _firestore
+                  .collection("Appointments Completed")
                   .doc(loggedInUser.uid)
                   .collection("Selected Booking Slot")
                   .add({

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BookingDemo extends StatefulWidget {
   static const String id = "BookingDemo";
@@ -102,13 +103,14 @@ class _BookingDemoState extends State<BookingDemo> {
       print(e);
     }
   }*/
-/*
-ListTile(
+
+/*ListTile(
 
 tileColor: Colors.cyan.shade100,
 leading: Text("Test Name: ",style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),
-title: Text(snapshot.data.docs[1]['Test Name'],style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),
-),
+title: Text(FirebaseFirestore.instance.collection("Appointments Summary").where("Test Name"),style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),
+),*/
+/*
 ListTile(
 tileColor: Colors.cyan.shade200,
 leading: Text("Laboratory Name: ",style: TextStyle(fontFamily: 'Poppins-Medium',fontSize: 17)),

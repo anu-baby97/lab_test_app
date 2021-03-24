@@ -57,11 +57,10 @@ class _ViewAppointmentState extends State<ViewAppointment> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 60,
+              Expanded(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
-                      .collection('Appointments')
+                      .collection('Appointments Completed')
                       .doc(loggedInUser.uid)
                       .collection("Selected Test")
                       .snapshots(),
@@ -92,11 +91,10 @@ class _ViewAppointmentState extends State<ViewAppointment> {
                   },
                 ),
               ),
-              SizedBox(
-                height: 60,
+              Expanded(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
-                      .collection('Appointments')
+                      .collection('Appointments Completed')
                       .doc(loggedInUser.uid)
                       .collection("Laboratory Selected")
                       .snapshots(),
@@ -128,11 +126,10 @@ class _ViewAppointmentState extends State<ViewAppointment> {
                   },
                 ),
               ),
-              SizedBox(
-                height: 60,
+              Expanded(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
-                      .collection('Appointments')
+                      .collection('Appointments Completed')
                       .doc(loggedInUser.uid)
                       .collection("Fees")
                       .snapshots(),
@@ -163,11 +160,10 @@ class _ViewAppointmentState extends State<ViewAppointment> {
                   },
                 ),
               ),
-              SizedBox(
-                height: 60,
+              Expanded(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
-                      .collection('Appointments')
+                      .collection('Appointments Completed')
                       .doc(loggedInUser.uid)
                       .collection("Selected Booking Slot")
                       .snapshots(),
@@ -198,6 +194,43 @@ class _ViewAppointmentState extends State<ViewAppointment> {
                   },
                 ),
               ),
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('Appointments Completed')
+                      .doc(loggedInUser.uid)
+                      .collection("Status")
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text("Loading");
+                    }
+
+                    return new ListView(
+                      children:
+                      snapshot.data.docs.map((DocumentSnapshot document) {
+                        return Card(
+                          child: ListTile(
+                            leading: Icon(Icons.assignment_turned_in_outlined,color:Colors.cyan.shade300),
+                            title:  Text(document["Status"].toString(),
+                                style: TextStyle(
+                                    fontFamily: 'Poppins-Medium',
+                                    fontSize: 17)),
+
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  },
+                ),
+              ),
+
+
             ],
           ),
         ),

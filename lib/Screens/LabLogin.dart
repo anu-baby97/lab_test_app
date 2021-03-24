@@ -1,21 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lab_test_booking_app/Screens/AdminHomeScreen.dart';
+import 'package:lab_test_booking_app/Screens/AdminLogin.dart';
+import 'package:lab_test_booking_app/Screens/LabInfo1.dart';
 import 'package:lab_test_booking_app/Screens/LoginScreen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:lab_test_booking_app/Services/authServices.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AdminLogin extends StatefulWidget {
-  static const String id = "AdminLogin";
+class LabLogin extends StatefulWidget {
+  static const String id = "LabLogin";
   @override
-  _AdminLoginState createState() => _AdminLoginState();
+  _LabLoginState createState() => _LabLoginState();
 }
 
-class _AdminLoginState extends State<AdminLogin> {
+class _LabLoginState extends State<LabLogin> {
+  final _auth = FirebaseAuth.instance;
+  User loggedUser;
+  final _firestore = FirebaseFirestore.instance;
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   String email;
   String password;
+  String id;
   bool showSpinner = false;
+List ts=["9.30","10.00"];
+  Future<String> getCurrentUIDofLab(User user) async {
+    return (loggedUser.uid);
+  }
+
+@override
+initState() {
+  super.initState();
+  getCurrentUIDofLab(loggedUser);
+}
 
   Future<bool> _onBackPressed() {
     return showDialog(
@@ -76,36 +94,43 @@ class _AdminLoginState extends State<AdminLogin> {
       child: SafeArea(
         child: new Scaffold(
           backgroundColor: Colors.cyan.shade50,
-          appBar: AppBar(
-            backgroundColor: Colors.cyan.shade50
-
-          ),
+          appBar: AppBar(backgroundColor: Colors.cyan.shade50),
           drawer: Drawer(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  ListTile(
-                    title: Text("Patient"),
-                    leading: Icon(Icons.person),
-                    onTap: () {
-                      setState(() {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, LoginScreen.id, (route) => true);
-                      });
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Admin"),
-                    leading: Icon(Icons.supervisor_account),
-                    onTap: () {
-                      setState(() {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, AdminLogin.id, (route) => true);
-                      });
-                    },
-                  )
-                ],
-              )),
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ListTile(
+                title: Text("Patient"),
+                leading: Icon(Icons.person),
+                onTap: () {
+                  setState(() {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, LoginScreen.id, (route) => true);
+                  });
+                },
+              ),
+              ListTile(
+                title: Text("Admin"),
+                leading: Icon(Icons.supervisor_account),
+                onTap: () {
+                  setState(() {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, AdminLogin.id, (route) => true);
+                  });
+                },
+              ),
+              ListTile(
+                title: Text("Clinic"),
+                leading: Icon(Icons.supervisor_account),
+                onTap: () {
+                  setState(() {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, LabLogin.id, (route) => true);
+                  });
+                },
+              )
+            ],
+          )),
           body: ModalProgressHUD(
             inAsyncCall: showSpinner,
             child: SafeArea(
@@ -221,17 +246,17 @@ class _AdminLoginState extends State<AdminLogin> {
                                     SizedBox(height: 10),
                                     InkWell(
                                       child: Container(
-                                        width:
-                                        ScreenUtil.getInstance().setWidth(330),
-                                        height:
-                                        ScreenUtil.getInstance().setHeight(100),
+                                        width: ScreenUtil.getInstance()
+                                            .setWidth(330),
+                                        height: ScreenUtil.getInstance()
+                                            .setHeight(100),
                                         decoration: BoxDecoration(
                                             gradient: LinearGradient(colors: [
                                               Color(0xFF17ead9),
                                               Color(0xFF6078ea)
                                             ]),
                                             borderRadius:
-                                            BorderRadius.circular(6.0),
+                                                BorderRadius.circular(6.0),
                                             boxShadow: [
                                               BoxShadow(
                                                   color: Color(0xFF6078ea)
@@ -249,15 +274,18 @@ class _AdminLoginState extends State<AdminLogin> {
                                                   setState(() {
                                                     showSpinner = true;
                                                   });
-
-                                                  final user = await AuthService()
+                                                  final user = await _auth
                                                       .signInWithEmailAndPassword(
-                                                      email, password);
+                                                          email: email,
+                                                          password: password);
+                                                  loggedUser = user.user;
+                                                  getCurrentUIDofLab(loggedUser);
+
                                                   if (user != null) {
                                                     Navigator
                                                         .pushNamedAndRemoveUntil(
-                                                        context,
-                                                        AdminHomeScreen.id,
+                                                            context,
+                                                            LabInfo1.id,
                                                             (route) => true);
                                                     _controller.clear();
                                                     _controller1.clear();
@@ -268,8 +296,8 @@ class _AdminLoginState extends State<AdminLogin> {
                                                 } else {
                                                   showDialog(
                                                       context: context,
-                                                      builder:
-                                                          (BuildContext context) {
+                                                      builder: (BuildContext
+                                                          context) {
                                                         return AlertDialog(
                                                           title: Center(
                                                             child: Text(
@@ -284,17 +312,18 @@ class _AdminLoginState extends State<AdminLogin> {
                                                                   "Try Again",
                                                                   style: TextStyle(
                                                                       fontSize:
-                                                                      15)),
+                                                                          15)),
                                                               onPressed: () {
-                                                                _controller.clear();
+                                                                _controller
+                                                                    .clear();
                                                                 _controller1
                                                                     .clear();
                                                                 Navigator.of(
-                                                                    context)
+                                                                        context)
                                                                     .pop();
                                                                 setState(() {
                                                                   showSpinner =
-                                                                  false;
+                                                                      false;
                                                                 });
                                                               },
                                                             )
@@ -318,14 +347,18 @@ class _AdminLoginState extends State<AdminLogin> {
                                                         ),
                                                         actions: <Widget>[
                                                           TextButton(
-                                                            child: Text("Try Again",
+                                                            child: Text(
+                                                                "Try Again",
                                                                 style: TextStyle(
-                                                                    fontSize: 15)),
+                                                                    fontSize:
+                                                                        15)),
                                                             onPressed: () {
-                                                              Navigator.of(context)
+                                                              Navigator.of(
+                                                                      context)
                                                                   .pop();
                                                               setState(() {
-                                                                showSpinner = false;
+                                                                showSpinner =
+                                                                    false;
                                                               });
                                                             },
                                                           )
@@ -364,5 +397,6 @@ class _AdminLoginState extends State<AdminLogin> {
         ),
       ),
     );
+
   }
 }

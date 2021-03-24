@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:lab_test_booking_app/Screens/AdminHomeScreen.dart';
 import 'package:lab_test_booking_app/Screens/AdminLogin.dart';
 import 'package:lab_test_booking_app/Screens/AppointmentInfo.dart';
 import 'package:lab_test_booking_app/Screens/BookingScreen.dart';
+import 'package:lab_test_booking_app/Screens/ClinicRegistration.dart';
 import 'package:lab_test_booking_app/Screens/Forgot Password.dart';
 import 'package:lab_test_booking_app/Screens/HomeScreen.dart';
 import 'package:lab_test_booking_app/Screens/LabInfo.dart';
+import 'package:lab_test_booking_app/Screens/LabInfo1.dart';
+import 'package:lab_test_booking_app/Screens/LabLogin.dart';
 import 'package:lab_test_booking_app/Screens/LoginScreen.dart';
 import 'package:lab_test_booking_app/Screens/PaymentScreen.dart';
 import 'package:lab_test_booking_app/Screens/RegistrationScreen.dart';
@@ -38,6 +42,11 @@ class MyApp extends StatelessWidget {
         PaymentScreen.id: (context) => PaymentScreen(),
         AdminLogin.id: (context) => AdminLogin(),
         ViewAppointment.id: (context) => ViewAppointment(),
+        AdminHomeScreen.id:(context)=> AdminHomeScreen(),
+        ClinicRegistrationScreen.id:(context)=> ClinicRegistrationScreen(),
+        LabLogin.id:(context)=> LabLogin(),
+        LabInfo1.id:(context)=> LabInfo1(),
+
       },
     );
   }

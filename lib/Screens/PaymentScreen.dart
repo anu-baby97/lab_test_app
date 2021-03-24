@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:lab_test_booking_app/Screens/HomeScreen.dart';
 import 'package:lab_test_booking_app/Screens/LabInfo.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PaymentScreen extends StatefulWidget {
   static const String id = "Payment Screen";
@@ -11,6 +13,31 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  User loggedInUser;
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
   Future<bool> _onBackPressed() {
     return showDialog(
           context: context,
@@ -110,8 +137,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                     actions: <Widget>[
                       new GestureDetector(
-                        onTap: () =>
-                            Navigator.popAndPushNamed(context, HomeScreen.id),
+                        onTap: () {
+                Navigator.popAndPushNamed(context, HomeScreen.id);
+                _firestore
+                    .collection("Appointments Completed")
+                    .doc(loggedInUser.uid).collection("Status").add({
+                  'Status':"Booked"
+                });
+
+                },
                         child: Text("OK     ",
                             style: TextStyle(
                                 fontFamily: "Poppins-Medium",
