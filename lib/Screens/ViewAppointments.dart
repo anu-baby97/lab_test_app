@@ -10,11 +10,9 @@ class ViewAppointment extends StatefulWidget {
   _ViewAppointmentState createState() => _ViewAppointmentState();
 }
 
-//final _firestore = FirebaseFirestore.instance;
-var firebaseUser = FirebaseAuth.instance.currentUser;
-final _auth = FirebaseAuth.instance;
-
 class _ViewAppointmentState extends State<ViewAppointment> {
+
+  DocumentSnapshot documentSnapshot;
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
   void getCurrentUser() async {
@@ -33,13 +31,14 @@ class _ViewAppointmentState extends State<ViewAppointment> {
   initState() {
     super.initState();
     getCurrentUser();
+
   }
 
   @override
   void dispose() {
     super.dispose();
   }
-
+  Type type=Future;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,191 +46,435 @@ class _ViewAppointmentState extends State<ViewAppointment> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          "Appointment Details",
+          "Your Appointments",
           style: TextStyle(fontFamily: 'Poppins-Medium'),
         ),
       ),
       body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('Appointments Completed')
-                      .doc(loggedInUser.uid)
-                      .collection("Selected Test")
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Something went wrong');
-                    }
+        child: SingleChildScrollView(
+          child: Container(
+           height: MediaQuery.of(context).size.height,
+             width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
 
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
-                    }
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Appointments Completed')
+                        .doc(loggedInUser.uid)
+                        .collection("Selected Test")
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
 
-                    return new ListView(
-                      children:
-                          snapshot.data.docs.map((DocumentSnapshot document) {
-                        return Card(
-                          child: ListTile(
-                            leading: Text("Test Name: ",
-                                style: TextStyle(
-                                    fontFamily: 'Poppins-Medium',
-                                    fontSize: 17)),
-                            title: Text(document["Test Name"].toString()),
-                          ),
-                        );
-                      }).toList(),
-                    );
-                  },
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text("Loading");
+                      }
+                      int length=snapshot.data.docs.length;
+
+                      return new Column(
+                          children:
+                          [
+                            Expanded(
+                              child: Card(
+                                child: ListTile(
+                                  leading: Text("Test Name: ",
+                                      style: TextStyle(
+                                          fontFamily: 'Poppins-Medium',
+                                          fontSize: 17)),
+                                  title: Text(
+                                      snapshot.data.docs[0]["Test Name"].toString()),
+                                ),
+                              ),
+                            ),
+
+                          ]
+                      );
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('Appointments Completed')
-                      .doc(loggedInUser.uid)
-                      .collection("Laboratory Selected")
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Something went wrong');
-                    }
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Appointments Completed')
+                        .doc(loggedInUser.uid)
+                        .collection("Laboratory Selected")
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Something went wrong');
+                        }
 
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
-                    }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text("Loading");
+                        }
+                        int length = snapshot.data.docs.length;
 
-                    return new ListView(
-                      children:
-                          snapshot.data.docs.map((DocumentSnapshot document) {
-                        return Card(
-                          child: ListTile(
-                            leading: Text("Lab Name: ",
-                                style: TextStyle(
-                                    fontFamily: 'Poppins-Medium',
-                                    fontSize: 17)),
-                            title: Text(
-                                document["Selected Laboratory"].toString()),
-                          ),
+                        return new Column(
+                            children:
+                            [
+                              Expanded(
+                                child: Card(
+                                  child: ListTile(
+                                    leading: Text("Lab Name: ",
+                                        style: TextStyle(
+                                            fontFamily: 'Poppins-Medium',
+                                            fontSize: 17)),
+                                    title: Text(
+                                        snapshot.data
+                                            .docs[0]["Selected Laboratory"]
+                                            .toString()),
+                                  ),
+                                ),
+                              ),
+
+                            ]
                         );
-                      }).toList(),
-                    );
-                  },
+
+                    },
+
+                  ),
                 ),
-              ),
-              Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('Appointments Completed')
-                      .doc(loggedInUser.uid)
-                      .collection("Fees")
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Something went wrong');
-                    }
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Appointments Completed')
+                        .doc(loggedInUser.uid)
+                        .collection("Fees")
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
 
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
-                    }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text("Loading");
+                      }
+                      int length=snapshot.data.docs.length;
+                      return new Column(
+                          children:
+                          [
+                            Expanded(
+                              child: Card(
+                                child: ListTile(
+                                  leading: Text("Fees: ",
+                                      style: TextStyle(
+                                          fontFamily: 'Poppins-Medium',
+                                          fontSize: 17)),
+                                  title: Text(
+                                      snapshot.data.docs[0]["Fees"].toString()),
+                                ),
+                              ),
+                            ),
 
-                    return new ListView(
-                      children:
-                          snapshot.data.docs.map((DocumentSnapshot document) {
-                        return Card(
-                          child: ListTile(
-                            leading: Text("Fees: ",
-                                style: TextStyle(
-                                    fontFamily: 'Poppins-Medium',
-                                    fontSize: 17)),
-                            title: Text(document["Fees"].toString()),
-                          ),
-                        );
-                      }).toList(),
-                    );
-                  },
+                          ]
+                      );
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('Appointments Completed')
-                      .doc(loggedInUser.uid)
-                      .collection("Selected Booking Slot")
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Something went wrong');
-                    }
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Appointments Completed')
+                        .doc(loggedInUser.uid)
+                        .collection("Selected Booking Slot")
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
 
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
-                    }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text("Loading");
+                      }
+                      int length=snapshot.data.docs.length;
+                      return new Column(
+                          children:
+                          [
+                            Expanded(
+                              child: Card(
+                                child: ListTile(
+                                  leading: Text("Booked Slot: ",
+                                      style: TextStyle(
+                                          fontFamily: 'Poppins-Medium',
+                                          fontSize: 17)),
+                                  title: Text(
+                                      snapshot.data.docs[0]["Date and Time"].toString()),
+                                ),
+                              ),
+                            ),
 
-                    return new ListView(
-                      children:
-                          snapshot.data.docs.map((DocumentSnapshot document) {
-                        return Card(
-                          child: ListTile(
-                            leading: Text("Date and Time: ",
-                                style: TextStyle(
-                                    fontFamily: 'Poppins-Medium',
-                                    fontSize: 17)),
-                            title: Text(document["Date and Time"].toString()),
-                          ),
-                        );
-                      }).toList(),
-                    );
-                  },
+                          ]
+                      );
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('Appointments Completed')
-                      .doc(loggedInUser.uid)
-                      .collection("Status")
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Something went wrong');
-                    }
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Appointments Completed')
+                        .doc(loggedInUser.uid)
+                        .collection("Status")
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
 
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
-                    }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text("Loading");
+                      }
+                      int length=snapshot.data.docs.length;
+                      return new Column(
+                          children:
+                          [
+                            Expanded(
+                              child: Card(
+                                child: ListTile(
+                                  leading: Icon(Icons.assignment_turned_in_outlined,color:Colors.cyan.shade300),
+                                  title:  Text(snapshot.data.docs[0]["Status"].toString(),
+                                      style: TextStyle(
+                                          fontFamily: 'Poppins-Medium',
+                                          fontSize: 17)),
+                                ),
+                              ),
+                            ),
 
-                    return new ListView(
-                      children:
-                      snapshot.data.docs.map((DocumentSnapshot document) {
-                        return Card(
-                          child: ListTile(
-                            leading: Icon(Icons.assignment_turned_in_outlined,color:Colors.cyan.shade300),
-                            title:  Text(document["Status"].toString(),
-                                style: TextStyle(
-                                    fontFamily: 'Poppins-Medium',
-                                    fontSize: 17)),
-
-                          ),
-                        );
-                      }).toList(),
-                    );
-                  },
+                          ]
+                      );
+                    },
+                  ),
                 ),
-              ),
+                Divider(
+                  height: 20,
+                  thickness: 2,
+                  color: Colors.cyan.shade200,
+                ),
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Appointments Completed')
+                        .doc(loggedInUser.uid)
+                        .collection("Selected Test")
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text("Loading");
+                      }
+try {
+  return new Column(
+      children:
+      [
+        Expanded(
+          child: Card(
+            child: ListTile(
+              leading: Text("Test Name: ",
+                  style: TextStyle(
+                      fontFamily: 'Poppins-Medium',
+                      fontSize: 17)),
+              title: Text(
+                  snapshot.data.docs[1]["Test Name"].toString()),
+            ),
+          ),
+        ),
+
+      ]
+  );
+}
+                      catch(e){
+                        return Text("");
+                      }
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Appointments Completed')
+                        .doc(loggedInUser.uid)
+                        .collection("Laboratory Selected")
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text("Loading");
+                      }
+try {
+  return new Column(
+      children:
+      [
+        Expanded(
+          child: Card(
+            child: ListTile(
+              leading: Text("Lab Name: ",
+                  style: TextStyle(
+                      fontFamily: 'Poppins-Medium',
+                      fontSize: 17)),
+              title: Text(
+                  snapshot.data.docs[1]["Selected Laboratory"].toString()),
+            ),
+          ),
+        ),
+
+      ]
+  );
+}
+catch(e){
+  return Text("");
+}
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Appointments Completed')
+                        .doc(loggedInUser.uid)
+                        .collection("Fees")
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text("Loading");
+                      }
+try {
+  return new Column(
+      children:
+      [
+        Expanded(
+          child: Card(
+            child: ListTile(
+              leading: Text("Fees: ",
+                  style: TextStyle(
+                      fontFamily: 'Poppins-Medium',
+                      fontSize: 17)),
+              title: Text(
+                  snapshot.data.docs[1]["Fees"].toString()),
+            ),
+          ),
+        ),
+
+      ]
+  );
+}
+catch(e){
+  return Text("");
+}
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Appointments Completed')
+                        .doc(loggedInUser.uid)
+                        .collection("Selected Booking Slot")
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text("Loading");
+                      }
+try {
+  return new Column(
+      children:
+      [
+        Expanded(
+          child: Card(
+            child: ListTile(
+              leading: Text("Booked Slot: ",
+                  style: TextStyle(
+                      fontFamily: 'Poppins-Medium',
+                      fontSize: 17)),
+              title: Text(
+                  snapshot.data.docs[1]["Date and Time"].toString()),
+            ),
+          ),
+        ),
+
+      ]
+  );
+}
+catch(e){
+  return Text("");
+}
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Appointments Completed')
+                        .doc(loggedInUser.uid)
+                        .collection("Status")
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong');
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text("Loading");
+                      }
+try {
+  return new Column(
+      children:
+      [
+        Expanded(
+          child: Card(
+            child: ListTile(
+              leading: Icon(Icons.assignment_turned_in_outlined,
+                  color: Colors.cyan.shade300),
+              title: Text(snapshot.data.docs[1]["Status"].toString(),
+                  style: TextStyle(
+                      fontFamily: 'Poppins-Medium',
+                      fontSize: 17)),
+            ),
+          ),
+        ),
+
+      ]
+  );
+}
+catch(e){
+  return Text("");
+}
+                    },
+                  ),
+                ),
 
 
-            ],
+              ],
+            ),
           ),
         ),
       ),

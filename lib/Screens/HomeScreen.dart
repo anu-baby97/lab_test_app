@@ -8,6 +8,7 @@ import 'package:lab_test_booking_app/Screens/ViewAppointments.dart';
 import 'package:lab_test_booking_app/Services/authServices.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = "HomeScreen";
@@ -16,8 +17,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _auth=FirebaseAuth.instance;
-  Future<bool>_onBackPressed(){
+  final _auth = FirebaseAuth.instance;
+  Future<bool> _onBackPressed() {
     _auth.signOut();
     Navigator.popAndPushNamed(context, LoginScreen.id);
   }
@@ -172,8 +173,40 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () async {
-
-                         _onBackPressed();
+                          _onBackPressed();
+                          try {
+                            FirebaseFirestore.instance
+                                .collection("Appointments Summary")
+                                .doc("Selected Test")
+                                .delete()
+                                .then((value) => print("User Deleted"))
+                                .catchError((error) =>
+                                print("Failed to delete user: $error"));
+                            FirebaseFirestore.instance
+                                .collection("Appointments Summary")
+                                .doc("Selected Laboratory")
+                                .delete()
+                                .then((value) => print("User Deleted"))
+                                .catchError((error) =>
+                                print("Failed to delete user: $error"));
+                            FirebaseFirestore.instance
+                                .collection("Appointments Summary")
+                                .doc("Selected Booking Slot")
+                                .delete()
+                                .then((value) => print("User Deleted"))
+                                .catchError((error) =>
+                                print("Failed to delete user: $error"));
+                            FirebaseFirestore.instance
+                                .collection("Appointments Summary")
+                                .doc("Fees")
+                                .delete()
+                                .then((value) => print("User Deleted"))
+                                .catchError((error) =>
+                                print("Failed to delete user: $error"));
+                          }
+                          catch(e){
+                            CircularProgressIndicator();
+                          }
                         },
                         child: Center(
                           child: Text(

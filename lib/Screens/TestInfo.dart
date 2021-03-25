@@ -6,6 +6,8 @@ import 'package:lab_test_booking_app/Screens/LabInfo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+import 'BookingScreen.dart';
+
 class TestInfo extends StatefulWidget {
   static const String id = "TestInfoScreen";
   @override
@@ -86,18 +88,17 @@ class _TestInfoState extends State<TestInfo> {
                 print(value);
                 testSelect = value;
                 _firestore
-                    .collection("Appointments Summary").doc(loggedInUser.uid).set({
+                    .collection("Appointments Summary").doc("Selected Test").set({
                   'Test Name': testSelect,
                 });
                 _firestore
                     .collection("Appointments Completed")
-                    .doc(loggedInUser.uid)
-                    .collection("Selected Test")
+                    .doc(loggedInUser.uid).collection("Selected Test")
                     .add({
                   'Test Name': testSelect,
                 });
 
-                Navigator.pushNamed(context, LabInfo.id);
+                Navigator.pushNamed(context,LabInfo.id);
                 if (testSelect.isEmpty) {
                   return "Select a test";
                 }

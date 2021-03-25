@@ -16,6 +16,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:lab_test_booking_app/Screens/TestInfo.dart';
 import 'package:lab_test_booking_app/Screens/ViewAppointments.dart';
 
+import 'Screens/LoginScreen.dart';
+import 'Screens/ViewAppointments.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
